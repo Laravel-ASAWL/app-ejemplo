@@ -1,0 +1,22 @@
+{
+    "Email": "Correo Electrónico",
+    "Password": "Contraseña",
+    "Remember me": "Recordar las credenciales",
+    "Forgot your password?": "¿Olvidaste tu contraseña?",
+    "Log in": "Iniciar Sesión",
+    "Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.": "¿Olvidaste tu contraseña? No hay problema. Simplemente dinos tu dirección de correo electrónico y te enviaremos un enlace para restablecer tu contraseña, lo que te permitirá elegir una nueva.",
+    "Email Password Reset Link": "Enlace de reseteo de contraseña",
+    "Confirm Password": "Confirmar contraseña",
+    "Reset Password": "Resetear contraseña",
+    "I agree to the :terms_of_service and :privacy_policy": "Estoy de acuerdo en los :terms_of_service y :privacy_policy",
+    "Terms of Service": "Términos del Servicio",
+    "Privacy Policy": "Políticas de Privacidad",
+    "Already registered?": "¿Aún no te registras?",
+    "Register": "Registrarse",
+    "": "",
+
+    "Showing": "Mostrando de",
+    "to": "a",
+    "of": "de",
+    "results": "resultados"
+}
