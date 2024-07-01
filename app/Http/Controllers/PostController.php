@@ -43,8 +43,7 @@ class PostController extends Controller
     public function show(string $slug): View
     {
         $post = Post::where('slug', $slug)->firstOrFail();
-        $post->load('user');
-        $comments = $post->comments()->latest()->with('user')->paginate(5);
+        $comments = $post->comments()->latest()->with('user')->paginate(10);
 
         return view('posts.show', [
             'post' => $post,
