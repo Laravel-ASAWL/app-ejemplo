@@ -24,10 +24,10 @@
                             <dd class="whitespace-nowrap text-sm leading-6 dark:text-slate-400"><time datetime="{{ $post->created_at }}">{{ $post->created_at->diffForHumans() }}</time></dd>
                         </dl>
                     </div>
-                    <a class="flex items-center text-sm text-sky-500 font-medium" href="{{ route('posts.show', $post) }}">
+                    <a class="flex items-center text-sm text-red-500 font-medium" href="{{ route('posts.show', $post) }}">
                         <span class="absolute -inset-y-2.5 -inset-x-4 md:-inset-y-4 md:-inset-x-6 sm:rounded-2xl"></span>
                         <span class="relative">Leer mas<span class="sr-only">, {{ $post->title }}</span></span>
-                        <svg class="relative mt-px overflow-visible ml-2.5 text-sky-300 dark:text-sky-700" width="3" height="6" viewBox="0 0 3 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="relative mt-px overflow-visible ml-2.5 text-red-500 dark:text-sky-700" width="3" height="6" viewBox="0 0 3 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M0 0L3 3L0 6"></path>
                         </svg></a>
                 </article>

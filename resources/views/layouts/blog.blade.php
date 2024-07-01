@@ -36,10 +36,10 @@
                             <nav class="text-sm leading-6 font-semibold text-slate-700 dark:text-slate-200">
                                 <ul class="flex space-x-8">
                                 @auth
-                                    <li><a class="hover:text-red-500 dark:hover:text-red-400" href="{{ url('/dashboard') }}">Dashboard</a></li>
+                                    <li><a class="hover:text-red-500 dark:hover:text-red-400" href="{{ url('/dashboard') }}">{{ __('Dashboard') }}</a></li>
                                 @else
-                                    <li><a class="hover:text-red-500 dark:hover:text-red-400" href="{{ route('login') }}">Iniciar sesión</a></li>
-                                    <li><a class="hover:text-red-500 dark:hover:text-red-400" href="{{ route('register') }}">Regístrate</a></li>
+                                    <li><a class="hover:text-red-500 dark:hover:text-red-400" href="{{ route('login') }}">{{ __('Log in') }}</a></li>
+                                    <li><a class="hover:text-red-500 dark:hover:text-red-400" href="{{ route('register') }}">{{ __('Register') }}</a></li>
                                 @endauth
                                 </ul>
                             </nav>
