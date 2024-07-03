@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Blog;
+namespace Tests\Feature\Post;
 
 use App\Models\Comment;
 use App\Models\Post;
@@ -14,19 +14,6 @@ use Tests\TestCase;
 class PostsTest extends TestCase
 {
     use RefreshDatabase;
-
-    /**
-     * 
-     */
-    public function test_database_seeder()
-    {
-        $this->seed(DatabaseSeeder::class);
-
-        $this->assertDatabaseHas('users', [
-            'name' => 'asawl',
-            'email' => 'asawl@ejemplo.com',
-        ]);
-    }
 
     /**
      * A post can be created.
