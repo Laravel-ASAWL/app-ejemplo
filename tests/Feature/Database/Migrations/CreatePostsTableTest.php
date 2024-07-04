@@ -20,14 +20,14 @@ class CreatePostsTableTest extends TestCase
      * Columns, names and types.
      */
     protected $columns = [
-        'id',
-        'user_id', 
-        'title',
-        'slug',
-        'description',
-        'body',
-        'created_at',
-        'updated_at',
+        'id' => 'INTEGER',
+        'user_id' => 'INTEGER', 
+        'title' => 'varchar',
+        'slug' => 'varchar',
+        'description' => 'TEXT',
+        'body' => 'TEXT',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     /**
@@ -64,12 +64,34 @@ class CreatePostsTableTest extends TestCase
     }
 
     /**
-     * Test posts table has correct column names.
-     */
-    public function test_posts_table_has_correct_column_names()
-    {
-        $this->assertTrue(Schema::hasColumns($this->table, $this->columns));
-    }
+    * Test posts table has correct column names.
+    */
+   public function test_posts_table_has_correct_column_names()
+   {
+       $column_names = []; 
+
+       foreach ($this->columns as $key => $value) {
+           $column_names[] = $key;
+       }
+
+       $colmnn_names = array_values($column_names);
+
+       $this->assertTrue(Schema::hasColumns($this->table, $colmnn_names));
+   }
+
+   /**
+    * Test posts table has correct column names.
+    */
+   public function test_posts_table_has_correct_column_types()
+   {
+       $column_types = DB::select(
+           DB::raw("PRAGMA table_info($this->table)")->getValue(DB::connection()->getQueryGrammar()) 
+       );
+
+       foreach ($column_types as $key => $value) {
+           $this->assertEquals($value->type, $this->columns[$value->name]);
+       }
+   }
 
     /**
      * Test comments table has primary key.

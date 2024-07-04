@@ -5,67 +5,44 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Validation\ValidationException;
 
 class CommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
      /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request, Post $post)
     {
-        $data = $request->validate([
-            'body' => ['required', 'string', 'max:255']
-        ]);
+        try {
+            $this->authorize('create', Comment::class); 
+            
+            $data = $request->validate([
+                'body' => ['required', 'string', 'min:25', 'max:255']
+            ]);
+    
+            $post->comments()->create([
+                'user_id' => $request->user()->id,
+                'post_id' => $post->id,
+                'body' => $data['body'],
+            ]);
+        
+            return to_route('posts.show', $post->slug)
+                ->with('success', __('Comment created successfully!'))
+                ->withFragment('comments');
 
-        $post->comments()->create([
-            'user_id' => $request->user()->id,
-            'post_id' => $post->id,
-            'body' => $data['body'],
-        ]);
-
-        return to_route('posts.show', $post->slug)
-            ->with('success', 'Comentario enviado con éxito.')
-            ->withFragment('comments');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+        } catch (AuthorizationException $e) {
+            return to_route('posts.show', $post->slug)
+                ->withInput()
+                ->with('errors', [__('You are not authorized to create comments.')])
+                ->withFragment('comments');
+        } catch (ValidationException $e) {
+            return to_route('posts.show', $post->slug)
+                ->withInput()
+                ->withErrors($e->validator)
+                ->withFragment('comments'); 
+        }
     }
 
     /**
@@ -75,11 +52,10 @@ class CommentController extends Controller
     {
         $this->authorize('delete', $comment);
 
-        $slug = $comment->post->slug;
         $comment->delete();
 
-        return to_route('posts.show', $slug)
-            ->with('success', 'Comentario eliminado con éxito.')
+        return to_route('posts.show', $comment->post->slug)
+            ->with('success', __('Comment deleted successfully.'))
             ->withFragment('comments');
     }
 }

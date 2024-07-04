@@ -6,7 +6,13 @@
 >
     <testsuites>
         <testsuite name="Feature">
+            <directory>tests/Feature/App</directory>
+        </testsuite>
+        <testsuite name="Feature">
             <directory>tests/Feature/Database</directory>
+        </testsuite>
+        <testsuite name="Feature">
+            <directory>tests/Feature/Routes</directory>
         </testsuite>
     </testsuites>
     <source>

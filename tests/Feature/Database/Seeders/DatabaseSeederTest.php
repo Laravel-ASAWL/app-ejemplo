@@ -3,6 +3,7 @@
 namespace Tests\Feature\Database\Seeders;
 
 use Database\Seeders\DatabaseSeeder;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -22,6 +23,7 @@ class DatabaseSeederTest extends TestCase
             'email' => 'asawl@ejemplo.com',
         ]);
 
+        $this->assertDatabaseCount('users', 2501);
         $this->assertDatabaseCount('posts', 50);
         $this->assertDatabaseCount('comments', 2500);
     }

@@ -20,12 +20,12 @@ class CreateCommentsTableTest extends TestCase
      * Columns, names and types.
      */
     protected $columns = [
-        'id',
-        'user_id',
-        'post_id',
-        'body',
-        'created_at',
-        'updated_at',
+        'id' => 'INTEGER',
+        'user_id' => 'INTEGER',
+        'post_id' => 'INTEGER',
+        'body' => 'TEXT',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     /**
@@ -66,7 +66,15 @@ class CreateCommentsTableTest extends TestCase
      */
     public function test_comments_table_has_correct_column_names()
     {
-        $this->assertTrue(Schema::hasColumns($this->table, $this->columns));
+        $column_names = []; 
+
+        foreach ($this->columns as $key => $value) {
+            $column_names[] = $key;
+        }
+
+        $colmnn_names = array_values($column_names);
+
+        $this->assertTrue(Schema::hasColumns($this->table, $colmnn_names));
     }
 
     /**
@@ -77,6 +85,10 @@ class CreateCommentsTableTest extends TestCase
         $column_types = DB::select(
             DB::raw("PRAGMA table_info($this->table)")->getValue(DB::connection()->getQueryGrammar()) 
         );
+
+        foreach ($column_types as $key => $value) {
+            $this->assertEquals($value->type, $this->columns[$value->name]);
+        }
     }
 
     /**
@@ -89,7 +101,7 @@ class CreateCommentsTableTest extends TestCase
         );
     
         foreach ($primary_keys as $key => $value) {
-            if ($value->name == $this->primary_key) {
+            if ($value->name === $this->primary_key) {
                 $this->assertEquals(1, $value->pk);
             }
         }
