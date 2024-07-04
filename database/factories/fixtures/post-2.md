@@ -1,7 +1,3 @@
-😈 **XSS en Laravel: ¡Cuando los scripts se vuelven malvados!** 😈
-
-¡Hola, hackers wannabe y desarrolladores curiosos! 👋 Hoy vamos a desenmascarar al XSS (Cross-Site Scripting), ese villano que se esconde en las aplicaciones web Laravel. Pero no te preocupes, ¡no será una clase magistral aburrida! 🥱 En lugar de eso, te daré una guía informal y divertida para entender este tipo de vulnerabilidad y cómo evitar que los scripts maliciosos se infiltren en tu código.
-
 **¿Qué es el XSS?** 🤔
 
 Imagina que tu aplicación web tiene un chat 💬 o un formulario de comentarios. Un usuario malintencionado podría ingresar código JavaScript malicioso en su mensaje, como:

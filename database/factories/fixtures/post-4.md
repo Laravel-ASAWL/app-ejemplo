@@ -1,7 +1,3 @@
-😎 **CORS en Laravel: ¡Cuando las fronteras se vuelven porosas!** 😎
-
-¡Hola, hackers curiosos y desarrolladores aventureros! 👋 Hoy vamos a explorar el mundo de CORS (Cross-Origin Resource Sharing), esa política de seguridad que puede ser un dolor de cabeza para muchos. Pero no te preocupes, ¡no será una clase magistral aburrida! 🥱 En lugar de eso, te daré una guía informal y divertida para entender este concepto y cómo evitar que tu aplicación Laravel se convierta en un coladero.
-
 **¿Qué es CORS?** 🤔
 
 Imagínate que tu aplicación web es un país 🌎 y cada origen (dominio, protocolo, puerto) es una ciudad diferente. CORS es como un control fronterizo 🛂 que decide quién puede entrar y salir de cada ciudad. Por defecto, las ciudades son bastante estrictas y solo permiten la entrada a sus propios ciudadanos. Pero a veces, necesitas que las ciudades colaboren y compartan recursos. ¡Ahí es donde entra CORS!

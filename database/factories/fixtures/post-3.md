@@ -1,7 +1,3 @@
-🛡️ **CSRF en Laravel: ¡Cuando los formularios se vuelven impostores!** 🦹‍♀️
-
-¡Hola, hackers en potencia y desarrolladores intrépidos! 👋 Hoy vamos a desenmascarar al CSRF (Cross-Site Request Forgery), ese villano que se aprovecha de la confianza de los usuarios en las aplicaciones web Laravel. Pero no te preocupes, ¡no será una clase magistral aburrida! 🥱 En lugar de eso, te daré una guía informal y divertida para entender este tipo de vulnerabilidad y cómo evitar que los formularios se conviertan en impostores.
-
 **¿Qué es el CSRF?** 🤔
 
 Imagina que estás conectado a tu banco en línea 🏦 y, sin darte cuenta, visitas un sitio web malicioso. Este sitio web podría contener un formulario oculto que, al cargarse, realiza una transferencia de dinero desde tu cuenta sin tu permiso. ¡Es como si alguien hubiera falsificado tu firma en un cheque! ✍️

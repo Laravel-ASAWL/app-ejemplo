@@ -1,7 +1,3 @@
-🔐 **Autenticación en Laravel: ¡No dejes que cualquiera entre a tu fiesta VIP!** 🔐
-
-¡Hola, hackers curiosos y desarrolladores fiesteros! 👋 Hoy vamos a hablar de un tema que puede marcar la diferencia entre una aplicación segura y un desastre total: la autenticación. Pero no te preocupes, ¡no será una clase magistral aburrida! 🥱 En lugar de eso, te daré una guía informal y divertida para evitar que intrusos no deseados se cuelen en tu aplicación Laravel.
-
 **¿Qué es la autenticación?** 🤔
 
 Imagínate que tu aplicación Laravel es una fiesta VIP 🎉. La autenticación es como el portero de la discoteca que verifica la identidad de los invitados y solo permite la entrada a aquellos que están en la lista. ¡No querrás que un grupo de trolls arruine tu fiesta! 👹

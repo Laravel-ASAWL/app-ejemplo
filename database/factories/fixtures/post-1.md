@@ -1,7 +1,3 @@
-😎 **¡SQL Injection en Laravel: Cuando las consultas se vuelven rebeldes!** 😈
-
-¡Hola, amantes del código y la seguridad! 👋 Hoy vamos a sumergirnos en el mundo de las inyecciones SQL en aplicaciones web Laravel. Pero no te preocupes, ¡no será una clase aburrida! 🥱 En lugar de eso, te daré una guía informal y divertida para entender este tipo de vulnerabilidad y cómo evitar que los hackers se infiltren en tu precioso código.
-
 **¿Qué es una inyección SQL?** 🤔
 
 Imagínate que tu aplicación web tiene un formulario de inicio de sesión. 🔑 Un usuario malintencionado podría ingresar código malicioso en el campo de nombre de usuario, como:

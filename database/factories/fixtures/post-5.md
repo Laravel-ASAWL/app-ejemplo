@@ -1,7 +1,3 @@
-🙈 **¡Ups! Errores de Configuración en Laravel: ¡Cuando la seguridad se va de vacaciones!** 🙈
-
-¡Hola, hackers curiosos y desarrolladores despistados! 👋 Hoy vamos a hablar de esos pequeños (pero peligrosos) errores de configuración que pueden convertir tu aplicación Laravel en un blanco fácil para los atacantes. Pero no te preocupes, ¡no será una clase magistral aburrida! 🥱 En lugar de eso, te daré una guía informal y divertida para evitar que tu aplicación se convierta en un queso gruyere lleno de agujeros.
-
 **¿Qué son los errores de configuración?** 🤔
 
 Imagínate que tu aplicación Laravel es una casa 🏠. Los errores de configuración son como dejar las ventanas abiertas, la puerta sin llave o el código de la alarma pegado en la nevera. ¡Es como enviar una invitación a los ladrones! 🦹‍♂️

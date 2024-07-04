@@ -1,7 +1,3 @@
-🔒 **Encriptando tus Secretos en Laravel: ¡No dejes que tus datos anden desnudos por ahí!** 🔒
-
-¡Hola, hackers curiosos y desarrolladores guardianes de secretos! 👋 Hoy vamos a hablar de un tema que puede marcar la diferencia entre la seguridad de tus datos y un desastre total: la encriptación. Pero no te preocupes, ¡no será una clase magistral aburrida! 🥱 En lugar de eso, te daré una guía informal y divertida para que tus datos en Laravel viajen bien protegidos, tanto en reposo como en tránsito.
-
 **¿Qué es la encriptación?** 🤔
 
 Imagínate que tus datos son como un mensaje secreto que quieres enviar a tu amigo. 💌 La encriptación es como poner ese mensaje en un cofre cerrado con llave 🗝️, de modo que solo tu amigo, que tiene la llave correcta, pueda leerlo. ¡Nadie más podrá entender lo que dice!
