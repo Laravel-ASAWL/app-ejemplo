@@ -1,4 +1,37 @@
 {
+    "WASAL": "ASAWL",
+    "Web Application Security Analysis Laravel": "Análisis de Seguridad en Aplicaciones Web Laravel",
+    "App Example": "App de Ejemplo",
+    "asawl@example.com": "asawl@ejemplo.com",
+
+    "Post": "Artículo",
+    "Posts": "Artículos",
+    "Latest Posts": "Últimos Artículos",
+
+    "Comment": "Comentario",
+    "Comments": "Comentarios",
+    "Write a comment": "Escribe tu comentario",
+    "Send comment": "Enviar comentario",
+    "Back": "Regresar",
+
+    "Join the conversation!": "¡Únete a la conversación!",
+    "to share your thoughts and opinions.": "para compartir ideas y opiniones.",
+
+    "A comment is required.": "Un comentario es requerido.",
+    "The comment must be text.": "El comentario debe ser texto.",
+    "The comment must be at least 25 characters long.": "El comentario debe ser de 25 caracteres mínimo.",
+    "The comment cannot exceed 255 characters.": "El comentario excede de 255 caracteres.",
+
+    "Comment created successfully!": "¡Contenido creado satisfactoriamente!",
+    "You are not authorized to create comments.": "No estás autorizado para hacer comentarios.",
+    "Comment deleted successfully!": "¡Contenido eliminado satisfactoriamente!",
+    "You are not authorized to delete comments.": "No estás autorizado para hacer comentarios.",
+    "Whoops! Something went wrong. Please try again later.": "Ups! Algo salió mal. Por favor inténtalo más tarde",
+    "Whoops! Something went wrong.": "Ups! Algo salió mal.",
+
+    "Date": "Fecha",
+    "Read more": "Read more",
+
     "Email": "Correo Electrónico",
     "Password": "Contraseña",
     "Remember me": "Recordar las credenciales",
@@ -16,8 +49,7 @@
     "Dashboard": "Tablero",
     "Manage Account": "Administrar cuenta",
     "Profile": "Perfil",
-    "Log out": "Cerrar sesión",
-
+    "Log Out": "Cerrar sesión",
     "Showing": "Mostrando de",
     "to": "a",
     "of": "de",

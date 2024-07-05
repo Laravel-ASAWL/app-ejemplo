@@ -12,14 +12,26 @@ class CommentController extends Controller
 {
      /**
      * Store a newly created resource in storage.
+     * 
+     * @throws mixed
      */
     public function store(Request $request, Post $post)
     {
         try {
-            $this->authorize('create', Comment::class); 
+            $this->authorize('create', Comment::class);
             
             $data = $request->validate([
-                'body' => ['required', 'string', 'min:25', 'max:255']
+                'body' => [
+                    'required', 
+                    'string', 
+                    'min:25', 
+                    'max:255',
+                ],
+            ], [
+                'body.required' => __('A comment is required.'),
+                'body.string' => __('The comment must be text.'),
+                'body.min' => __('The comment must be at least 25 characters long.'),
+                'body.max' => __('The comment cannot exceed 255 characters.'),
             ]);
     
             $post->comments()->create([
@@ -31,7 +43,6 @@ class CommentController extends Controller
             return to_route('posts.show', $post->slug)
                 ->with('success', __('Comment created successfully!'))
                 ->withFragment('comments');
-
         } catch (AuthorizationException $e) {
             return to_route('posts.show', $post->slug)
                 ->withInput()
@@ -41,21 +52,30 @@ class CommentController extends Controller
             return to_route('posts.show', $post->slug)
                 ->withInput()
                 ->withErrors($e->validator)
-                ->withFragment('comments'); 
+                ->withFragment('comments');
         }
     }
 
     /**
      * Remove the specified resource from storage.
+     * 
+     * @throws mixed
      */
-    public function destroy(Comment $comment)
+    public function destroy(Post $post, Comment $comment)
     {
-        $this->authorize('delete', $comment);
+        try {
+            $this->authorize('delete', $comment, $post);
 
-        $comment->delete();
+            $comment->delete();
 
-        return to_route('posts.show', $comment->post->slug)
-            ->with('success', __('Comment deleted successfully.'))
-            ->withFragment('comments');
+            return to_route('posts.show', $post->slug)
+                ->with('success', __('Comment deleted successfully!'))
+                ->withFragment('comments');
+        } catch (AuthorizationException $e) {
+            return to_route('posts.show', $post->slug)
+                ->withInput()
+                ->with('errors', [__('You are not authorized to delete comments.')])
+                ->withFragment('comments');
+        }
     }
 }

@@ -19,8 +19,8 @@ class DatabaseSeederTest extends TestCase
         $this->seed(DatabaseSeeder::class);
 
         $this->assertDatabaseHas('users', [
-            'name' => 'asawl',
-            'email' => 'asawl@ejemplo.com',
+            'name' => __('WASAL'),
+            'email' => __('asawl@example.com'),
         ]);
 
         $this->assertDatabaseCount('users', 2501);

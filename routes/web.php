@@ -21,10 +21,10 @@ Route::get('/posts/{post:slug}', [PostController::class, 'show'])
     ->name('posts.show');
 
 /* Comments Routes */
-Route::post('/comments/{post}', [CommentController::class, 'store'])
+Route::post('/posts/{post}/comments', [CommentController::class, 'store'])
     ->middleware('auth')
-    ->name('comments.store');
+    ->name('posts.comments.store');
 
-Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])
+Route::delete('/posts/{post}/comments/{comment}', [CommentController::class, 'destroy'])
     ->middleware('auth')
-    ->name('comments.destroy');
+    ->name('posts.comments.destroy');
