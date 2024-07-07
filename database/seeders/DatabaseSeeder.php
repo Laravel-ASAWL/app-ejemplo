@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
             'password' => '@Asawl1234*',
         ]);
         Post::factory(50)->has(Comment::factory(50))->for($user)->create();
+        //Post::factory(50)->for($user)->create();
     }
 }

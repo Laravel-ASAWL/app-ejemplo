@@ -17,24 +17,8 @@ class PostController extends Controller
     public function index(): View
     {
         return view('posts.index', [
-            'posts' => Post::latest()->with('user')->paginate(10),
+            'posts' => Post::count() > 0 ? Post::latest()->with('user')->paginate(10) : null,
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -43,35 +27,10 @@ class PostController extends Controller
     public function show(string $slug): View
     {
         $post = Post::where('slug', $slug)->firstOrFail();
-        $comments = $post->comments()->latest()->with('user')->paginate(10);
 
         return view('posts.show', [
             'post' => $post,
-            'comments' => $comments
+            'comments' => $post->comments()->count() > 0 ? $post->comments()->latest()->with('user')->paginate(10) : null,
         ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

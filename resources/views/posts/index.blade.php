@@ -4,6 +4,15 @@
             <h1 class="mb-4 text-3xl sm:text-4xl tracking-tight text-slate-900 font-extrabold dark:text-slate-200">{{ __('WASAL') }}</h1>
             <h2 class="text-lg text-slate-700 dark:text-slate-400">{{ __('Web Application Security Analysis Laravel') }}</h2>
         </header>
+        @if($posts === null)
+        <div class="pt-12 bg-red-500 p-8 rounded-2xl shadow-2xl text-center">
+            <h2 class="text-3xl font-bold text-white mb-4">{{ __('Be the first to share your thoughts and opinions!') }}</h2>
+            <p class="text-lg text-white font-light mb-6">
+                {{ __('We invite you to write an article on our blog and join the conversation. It doesn\'t matter if you are a beginner or an expert in Laravel security, we all have something valuable to contribute!') }}<br/><br/>
+                <a href="{{ route('login') }}" class="text-red-200 hover:underline font-bold">{{ __('Log in') }}</a> o <a href="{{ route('register') }}" class="text-red-200 hover:underline font-bold">{{ __('Register') }}</a> {{ __('to share your thoughts and opinions.') }}
+            </p>
+        </div>
+        @else
         <div id ="posts" class="pb-16 sm:text-center">
             <h3 class="mb-4 text-2xl sm:text-3xl tracking-tight text-slate-900 font-extrabold dark:text-slate-200">{{ __('Latest Posts') }}</h3>
         </div>
@@ -38,5 +47,6 @@
         <div class="mt-12">
             {{ $posts->fragment('posts')->links() }}
         </div>
+        @endif
     </main>
 </x-blog-layout>
