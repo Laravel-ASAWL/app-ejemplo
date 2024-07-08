@@ -65,16 +65,18 @@ class PostControllerTest extends TestCase
     }
 
     /**
-     * Show page displays message when post has no comments.
+     * Show page displays message to guest user.
      */
-    public function test_show_displays_message_when_post_has_no_comments()
+    public function test_show_displays_message_to_guest_user()
     {
         $post = Post::factory()->create();
         
         $response = $this->get(route('posts.show', $post->slug));
         
-        $this->assertDatabaseCount('comments', 0);
-        $response->assertSee(__('Join the conversation!'));
+        $response->assertOk();
+        $response->assertViewIs('posts.show');
+        $response->assertViewHas('post', $post);
+        $response->assertSee(__('We invite you to write a comment on this post and join the conversation. It doesn\'t matter if you are a beginner or an expert in Laravel security, we all have something valuable to contribute!'));
     }
 
     /**

@@ -32,18 +32,10 @@
                         </div>
                     </article>
                 </main>
+
                 {{-- Comments --}}
                 <div class="mt-12">
                     <hr>
-                    @if($comments === null)
-                    <div class="pt-12 bg-red-500 p-8 rounded-lg shadow-lg text-center">
-                        <h2 class="text-3xl font-bold text-white mb-4">{{ __('Join the conversation!') }}</h2>
-                        <p class="text-lg text-white font-light mb-6">
-                            {{ __('We invite you to write a comment on this post and join the conversation. It doesn\'t matter if you are a beginner or an expert in Laravel security, we all have something valuable to contribute!') }}<br/><br/>
-                            <a href="{{ route('login') }}" class="text-red-200 hover:underline font-bold">{{ __('Log in') }}</a> o <a href="{{ route('register') }}" class="text-red-200 hover:underline font-bold">{{ __('Register') }}</a> {{ __('to share your thoughts and opinions.') }}
-                        </p>
-                    </div>
-                    @else
                     <section id="comments" class="bg-white dark:bg-gray-900 py-8 lg:py-16 antialiased">
                         <div class="max-w-2xl mx-auto px-4">
                             <div class="flex justify-between items-center mb-6">
@@ -113,6 +105,7 @@
                                 </p>
                             </div>
                             @endauth
+                            @if($comments !== null)
                             @foreach ($comments as $comment)
                             <article class="p-6 text-base bg-white rounded-lg dark:bg-gray-900">
                                 <footer class="flex justify-between items-center mb-2">
@@ -139,10 +132,10 @@
                             <div class="mt-6">
                                 {{ $comments->fragment('comments')->links() }}
                             </div>
+                            @endif
                         </div>
                     </section>
                 </div>
-                @endif
             </div>
         </div>
         <div class="max-w-8xl mx-auto">

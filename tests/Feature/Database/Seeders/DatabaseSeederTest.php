@@ -23,8 +23,8 @@ class DatabaseSeederTest extends TestCase
             'email' => __('asawl@example.com'),
         ]);
 
-        $this->assertDatabaseCount('users', 2501);
-        $this->assertDatabaseCount('posts', 50);
-        $this->assertDatabaseCount('comments', 2500);
+        $this->assertDatabaseCount('users', 2001);
+        $this->assertDatabaseCount('posts', 100);
+        $this->assertDatabaseCount('comments', 2000);
     }
 }

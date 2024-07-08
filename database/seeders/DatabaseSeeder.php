@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             'email' => __('asawl@example.com'),
             'password' => '@Asawl1234*',
         ]);
-        Post::factory(50)->has(Comment::factory(50))->for($user)->create();
+        Post::factory(100)->has(Comment::factory(20))->for($user)->create();
         //Post::factory(50)->for($user)->create();
     }
 }

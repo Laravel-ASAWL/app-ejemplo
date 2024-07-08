@@ -56,6 +56,40 @@ class CommentControllerTest extends TestCase
     }
 
     /**
+     * Comment creation fails without body
+     */
+    public function test_comment_creation_fails_without_body()
+    {
+        $user = User::factory()->create();
+        $post = Post::factory()->create();
+        Gate::define('create', fn (User $user, $comment) => $user->hasVerifiedEmail());
+        $this->actingAs($user);
+        
+        $response = $this->post(route('posts.comments.store', $post), ['body' => null]);
+
+        $response->assertRedirectContains(route('posts.show', $post->slug) . '#comments');
+        $response->assertSessionHasErrors(['body' => __('A comment is required.')]);
+        $this->assertDatabaseCount('comments', 0); 
+    }
+
+    /**
+     * Comment creation fails without body type string
+     */
+    public function test_comment_creation_fails_without_body_type_string()
+    {
+        $user = User::factory()->create();
+        $post = Post::factory()->create();
+        Gate::define('create', fn (User $user, $comment) => $user->hasVerifiedEmail());
+        $this->actingAs($user);
+        
+        $response = $this->post(route('posts.comments.store', $post), [ 'body' => 1234567890]);
+
+        $response->assertRedirectContains(route('posts.show', $post->slug) . '#comments');
+        $response->assertSessionHasErrors(['body' => __('The comment must be text.')]);
+        $this->assertDatabaseCount('comments', 0); 
+    }
+
+    /**
      * Comment creation fails with too short text
      */
     public function test_comment_creation_fails_with_too_short_text()

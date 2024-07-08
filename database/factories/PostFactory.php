@@ -53,6 +53,46 @@ class PostFactory extends Factory
             'title' => '🔒 Encriptando tus Secretos en Laravel: ¡No dejes que tus datos anden desnudos por ahí! 🔒',
             'description' => '¡Hola, hackers curiosos y desarrolladores guardianes de secretos! 👋 Hoy vamos a hablar de un tema que puede marcar la diferencia entre la seguridad de tus datos y un desastre total: la encriptación. Pero no te preocupes, ¡no será una clase magistral aburrida! 🥱 En lugar de eso, te daré una guía informal y divertida para que tus datos en Laravel viajen bien protegidos, tanto en reposo como en tránsito.',
         ],
+        11 => [
+            'title' => '😈 SQL Injection en Laravel: ¡La fiesta de los hackers en tu base de datos! 😈',
+            'description' => '¡Saludos, intrépidos desarrolladores y amantes del código limpio! 👋 Hoy nos adentraremos en las peligrosas aguas de la inyección SQL en Laravel, ese oscuro arte que puede convertir tu elegante aplicación web en un buffet libre para los hackers más hambrientos. Pero no temas, ¡aquí no hay sermones aburridos! 🥱 En su lugar, te voy a dar una guía práctica y divertida para que aprendas a proteger tu código y evitar que estos piratas informáticos se den un festín con tus datos.',
+        ],
+        12 => [
+            'title' => '😈 XSS en Laravel: ¡El ataque ninja que secuestra tu sitio web! 🥷',
+            'description' => '¡Hola, hackers en ciernes y desarrolladores ninjas! 👋 Hoy vamos a desenmascarar al XSS (Cross-Site Scripting), ese sigiloso atacante que se esconde en las sombras de las aplicaciones web Laravel, esperando el momento perfecto para inyectar su veneno. Pero no teman, ¡no será una clase magistral aburrida! 🥱 En lugar de eso, les daré una guía práctica y divertida para entender este tipo de vulnerabilidad y cómo proteger su código como verdaderos maestros del sigilo.',
+        ],
+        13 => [
+            'title' => '🦹‍♀️ CSRF en Laravel: ¡El ataque ninja del formulario impostor! 🦹‍♀️',
+            'description' => '¡Hola, hackers en entrenamiento y desarrolladores ninjas! 👋 Hoy vamos a desenmascarar al CSRF (Cross-Site Request Forgery), un villano sigiloso que se esconde en las sombras de la web, esperando el momento perfecto para engañar a tus usuarios y realizar acciones no autorizadas en tu aplicación Laravel. Pero no temas, ¡no será una clase magistral aburrida! 🥱 En lugar de eso, te daré una guía detallada y divertida para entender este tipo de vulnerabilidad y cómo proteger tu código como un verdadero maestro del sigilo.',
+        ],
+        14 => [
+            'title' => '🌐 CORS en Laravel: ¡El pasaporte para tus datos en la web! 🌐',
+            'description' => '¡Hola, trotamundos de la web y desarrolladores aventureros! 👋 Hoy vamos a desmitificar el misterioso mundo de CORS (Cross-Origin Resource Sharing), ese guardián de fronteras que a veces nos causa dolores de cabeza. Pero no te preocupes, ¡no será una clase magistral aburrida! 🥱 En lugar de eso, te daré una guía detallada y divertida para entender este concepto clave y cómo evitar que tu aplicación Laravel se convierta en un caos fronterizo.',
+        ],
+        15 => [
+            'title' => '🙈 ¡Alerta Roja! Errores de Configuración en Laravel: ¡No dejes que tu aplicación sea un blanco fácil! 🙈',
+            'description' => '¡Hola, hackers en potencia y desarrolladores despistados! 👋 Hoy vamos a sumergirnos en el mundo de los errores de configuración en Laravel, esos pequeños detalles que pueden marcar la diferencia entre una aplicación segura y un desastre total.',
+        ],
+        16 => [
+            'title' => '🙅‍♀️ Validación de Datos en Laravel: ¡El Control de Calidad de tu Fiesta Digital! 🙅‍♂️',
+            'description' => '¡Hola, hackers curiosos y desarrolladores meticulosos! 👋 Hoy vamos a hablar de la validación de datos en Laravel, esa tarea que a veces parece un rollo, pero que en realidad es la clave para mantener tu aplicación a salvo de intrusos y datos basura. ¡Así que olvídate de las clases magistrales aburridas y prepárate para una guía divertida y llena de ejemplos para proteger tu código como un profesional!',
+        ],
+        17 => [
+            'title' => '🕵️‍♂️ ¡Houston, tenemos una misión! (Registro y Monitoreo en Laravel: ¡La Bitácora Estelar de tu Aplicación!) 🚀',
+            'description' => '¡Saludos, astronautas del código y exploradores de la web! 👋 Hoy vamos a hablar de un tema que a veces se pasa por alto, pero que es vital para mantener tu aplicación Laravel a salvo de asteroides y agujeros negros: el registro y monitoreo. Pero no te preocupes, ¡no te voy a dar una clase magistral aburrida! 🥱 En lugar de eso, te llevaré en un viaje intergaláctico para descubrir cómo convertir tu aplicación en una nave espacial con sistemas de registro y monitoreo de última generación.',
+        ],
+        18 => [
+            'title' => '🚨 Pruebas de Penetración en Laravel: ¡Conviértete en el hacker de tu propia aplicación! (¡Pero del lado bueno!) 🚨',
+            'description' => '¡Saludos, aprendices de hackers y desarrolladores valientes! 👋 Hoy vamos a hablar de un tema que muchos desarrolladores evitan como si fuera un dragón escupefuego: las pruebas de penetración. Pero no temas, ¡no voy a convertirte en un villano! En cambio, te mostraré cómo usar tus habilidades de hacker para el bien, encontrando y solucionando vulnerabilidades en tu aplicación Laravel antes de que los malos lo hagan.',
+        ],
+        19 => [
+            'title' => '🔐 Autenticación en Laravel: ¡La Fiesta VIP de tu Aplicación... Solo para Invitados Autorizados! 🔐',
+            'description' => '¡Saludos, hackers curiosos y desarrolladores fiesteros! 👋 Hoy vamos a hablar de un tema que puede marcar la diferencia entre una aplicación segura y un desastre total: la autenticación. Pero no te preocupes, ¡no será una clase magistral aburrida! 🥱 En su lugar, te llevaré de la mano por el mundo de la autenticación en Laravel, para que aprendas a proteger tu aplicación como si fuera la fiesta más exclusiva del año.',
+        ],
+        20 => [
+            'title' => '🔒 Encriptando tus Secretos en Laravel: ¡El Arte de Convertir tus Datos en Jeroglíficos Impenetrables! 🔒',
+            'description' => '¡Hola, hackers curiosos y desarrolladores guardianes de datos! 👋 Hoy vamos a sumergirnos en el fascinante mundo de la encriptación en Laravel. No te preocupes, ¡no será una clase magistral aburrida! 🥱 En lugar de eso, te llevaré en un viaje lleno de aventuras y ejemplos prácticos para que aprendas a proteger tus datos como si fueran tesoros escondidos en una pirámide egipcia.',
+        ],
     ];
 
     /**
@@ -62,7 +102,7 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
-        $rand = rand(1,10);
+        $rand = rand(1,20);
         $user_id = User::factory();
         $title = $this->data[$rand]['title'];
         $slug = Str::slug(fake()->uuid());
