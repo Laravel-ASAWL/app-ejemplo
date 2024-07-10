@@ -14,7 +14,7 @@ class CommentFactoryTest extends TestCase
     use RefreshDatabase; 
 
     /**
-     * test comment factory creates valid comment
+     * Test comment factory creates valid comment
      */
     public function test_comment_factory_creates_valid_comment()
     {

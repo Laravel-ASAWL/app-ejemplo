@@ -18,6 +18,8 @@
     "Back": "Regresar",
     "Join the conversation!": "¡Únete a la conversación!",
     "We invite you to write a comment on this post and join the conversation. It doesn't matter if you are a beginner or an expert in Laravel security, we all have something valuable to contribute!": "Te invitamos a escribir un commentario en este artículo y unirte a la conversación. No importa si eres un principiante o un experto en la seguridad de Laravel, ¡todos tenemos algo valioso que aportar!",
+    "There are no comments on this post.": "No hay commentarios en este artículo.",
+
 
     "A comment is required.": "Un comentario es requerido.",
     "The comment must be text.": "El comentario debe ser texto.",

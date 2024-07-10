@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Database\Factories;
 
-use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use Carbon\Carbon;
@@ -14,7 +13,7 @@ class PostFactoryTest extends TestCase
     use RefreshDatabase; 
 
     /**
-     * test post factory creates valid post
+     * Test post factory creates valid post
      */
     public function test_post_factory_creates_valid_post()
     {

@@ -28,7 +28,7 @@ class PostTest extends TestCase
     */
     public function test_a_post_belongs_to_a_user()
     {
-        $post = Post::factory()->for(User::factory())->create();
+        $post = Post::factory()->create();
 
         $this->assertInstanceOf(User::class, $post->user);
     }
@@ -56,7 +56,7 @@ class PostTest extends TestCase
             'title' => 'Test Post',
             'slug' => 'test-post',
             'description' => 'A short description',
-            'body' => '✓ This is the body of the test post.'
+            'body' => 'This is the body of the test post.'
         ];
         $post = Post::create($data);
 

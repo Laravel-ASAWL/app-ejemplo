@@ -28,7 +28,7 @@ class CommentTest extends TestCase
      * */
     public function test_a_comment_belongs_to_a_user()
     {
-        $comment = Comment::factory()->for(User::factory())->create();
+        $comment = Comment::factory()->create();
 
         $this->assertInstanceOf(User::class, $comment->user);
     }
@@ -38,7 +38,7 @@ class CommentTest extends TestCase
      * */
     public function test_a_comment_belongs_to_a_post()
     {
-        $comment = Comment::factory()->for(Post::factory())->create();
+        $comment = Comment::factory()->create();
 
         $this->assertInstanceOf(Post::class, $comment->post);
     }
@@ -49,11 +49,11 @@ class CommentTest extends TestCase
     public function test_a_comment_can_be_created()
     {
         $user = User::factory()->create();
-        $post = Post::factory()->create();
+        $post = Post::factory()->for($user)->create();
         $data = [
             'user_id' => $user->id,
             'post_id' => $post->id,
-            'body' => 'This is a test comment.'
+            'body' => 'This is a test comment.',
         ];
         $comment = Comment::create($data);
 

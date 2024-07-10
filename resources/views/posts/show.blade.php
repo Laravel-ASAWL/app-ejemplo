@@ -58,27 +58,29 @@
                                 </button>
                             </div>
                             @endif
-                            @if( $errors->any() )
-                                @foreach ($errors->all() as $error)
-                                <div id="alert" class="flex items-center p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300" role="alert">
-                                    <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                                    </svg>
-                                    <span class="sr-only">Info</span>
-                                    <div class="ms-3 text-sm font-medium">
-                                        {{ $error }}
-                                    </div>
-                                    <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-yellow-50 text-yellow-500 rounded-lg focus:ring-2 focus:ring-yellow-400 p-1.5 hover:bg-yellow-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-yellow-300 dark:hover:bg-gray-700"
-                                        data-dismiss-target="#alert"
-                                        aria-label="Close">
-                                        <span class="sr-only">Close</span>
-                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                            @isset($errors)
+                                @if( $errors->any() )
+                                    @foreach ($errors->all() as $error)
+                                    <div id="alert" class="flex items-center p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300" role="alert">
+                                        <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                                         </svg>
-                                    </button>
-                                </div>
-                                @endforeach
-                            @endif
+                                        <span class="sr-only">Info</span>
+                                        <div class="ms-3 text-sm font-medium">
+                                            {{ $error }}
+                                        </div>
+                                        <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-yellow-50 text-yellow-500 rounded-lg focus:ring-2 focus:ring-yellow-400 p-1.5 hover:bg-yellow-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-yellow-300 dark:hover:bg-gray-700"
+                                            data-dismiss-target="#alert"
+                                            aria-label="Close">
+                                            <span class="sr-only">Close</span>
+                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    @endforeach
+                                @endif
+                            @endisset
                             @auth
                             <form action="{{ route('posts.comments.store', $post) }}" method="POST" class="mb-6">
                                 @csrf
@@ -106,32 +108,36 @@
                             </div>
                             @endauth
                             @if($comments !== null)
-                            @foreach ($comments as $comment)
-                            <article class="p-6 text-base bg-white rounded-lg dark:bg-gray-900">
-                                <footer class="flex justify-between items-center mb-2">
-                                    <div class="flex items-center">
-                                        <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold"> <img class="mr-2 w-6 h-6 rounded-full" src="{{ $comment->user->profile_photo_url }}" alt="{{ $comment->user->name }}">{{ $comment->user->name }}</p>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400"><time pubdate datetime="2022-02-08" title="{{ $comment->created_at->diffForHumans() }}">{{ $comment->created_at->diffForHumans() }}</time></p>
-                                    </div>
-                                    @can('delete', $comment)
-                                    <form action="{{ route('posts.comments.destroy', [$post, $comment]) }}" method="POST" class="mt-2">
-                                        @method('DELETE')
-                                        @csrf
-                                        <button type="submit" class="group">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500 group-hover:text-red-700 transition duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                            </svg>
-                                        </button>
-                                    </form>
-                                    @endcan                                    
-                                </footer>
-                                <p class="text-gray-500 dark:text-gray-400">{{ $comment->body }}</p>
-                            </article>
-                            <hr>
-                            @endforeach
-                            <div class="mt-6">
-                                {{ $comments->fragment('comments')->links() }}
-                            </div>
+                                @foreach ($comments as $comment)
+                                    <article class="p-6 text-base bg-white rounded-lg dark:bg-gray-900">
+                                        <footer class="flex justify-between items-center mb-2">
+                                            <div class="flex items-center">
+                                                <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold"> <img class="mr-2 w-6 h-6 rounded-full" src="{{ $comment->user->profile_photo_url }}" alt="{{ $comment->user->name }}">{{ $comment->user->name }}</p>
+                                                <p class="text-sm text-gray-600 dark:text-gray-400"><time pubdate datetime="2022-02-08" title="{{ $comment->created_at->diffForHumans() }}">{{ $comment->created_at->diffForHumans() }}</time></p>
+                                            </div>
+                                            @can('delete', $comment)
+                                            <form action="{{ route('posts.comments.destroy', [$post, $comment]) }}" method="POST" class="mt-2">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="submit" class="group">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500 group-hover:text-red-700 transition duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                            @endcan                                    
+                                        </footer>
+                                        <p class="text-gray-500 dark:text-gray-400">{{ $comment->body }}</p>
+                                    </article>
+                                    <hr>
+                                @endforeach
+                                <div class="mt-6">
+                                    {{ $comments->fragment('comments')->links() }}
+                                </div>
+                            @else
+                                <div class="mt-12 pt-12 bg-red-500 p-8 rounded-lg shadow-lg text-center">
+                                    <h2 class="text-3xl font-bold text-white mb-4">{{ __('There are no comments on this post.') }}</h2>
+                                </div>
                             @endif
                         </div>
                     </section>

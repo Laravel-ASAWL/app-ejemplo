@@ -12,6 +12,9 @@
             <directory>tests/Feature/Database</directory>
         </testsuite>
         <testsuite name="Feature">
+            <directory>tests/Feature/Resources</directory>
+        </testsuite>
+        <testsuite name="Feature">
             <directory>tests/Feature/Routes</directory>
         </testsuite>
     </testsuites>

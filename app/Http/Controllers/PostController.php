@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
 class PostController extends Controller
@@ -23,6 +21,10 @@ class PostController extends Controller
 
     /**
      * Display the specified resource.
+     * 
+     * @param string $slug
+     * 
+     * @return View
      */
     public function show(string $slug): View
     {
