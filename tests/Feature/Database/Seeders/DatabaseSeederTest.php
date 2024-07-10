@@ -3,7 +3,6 @@
 namespace Tests\Feature\Database\Seeders;
 
 use Database\Seeders\DatabaseSeeder;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

@@ -12,6 +12,11 @@ use Illuminate\Support\Str;
  */
 class PostFactory extends Factory
 {
+    /**
+     * Data used for testing.
+     *
+     * @var string
+     */
     protected $data = [
         1 => [
             'title' => '😎 SQL Injection en Laravel: ¡Cuando las consultas se vuelven rebeldes! 😈',
@@ -102,13 +107,13 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
-        $rand = rand(1,20);
+        $rand = rand(1, 20);
         $user_id = User::factory();
         $title = $this->data[$rand]['title'];
         $slug = Str::slug(fake()->uuid());
         $description = $this->data[$rand]['description'];
-        $body = file_get_contents(database_path("factories/fixtures/post-". $rand .".md"));
-        $date = Carbon::createFromTimestamp(rand(Carbon::now()->subYears(1)->timestamp, Carbon::now()->timestamp));;
+        $body = file_get_contents(database_path('factories/fixtures/post-'.$rand.'.md'));
+        $date = Carbon::createFromTimestamp(rand(Carbon::now()->subYears(1)->timestamp, Carbon::now()->timestamp));
 
         return [
             'user_id' => $user_id,

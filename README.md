@@ -59,6 +59,29 @@ Este programa está diseñado para desarrolladores web que deseen adquirir habil
 
 ## Instalación inicial
 
+## Instalación de Laravel Pint
+
+```bash
+composer require laravel/pint --dev
+code pint.json
+```
+
+Ver [pint.json](./pint.json)
+
+```json
+{
+    "preset": "laravel",
+    "rules": {
+        "simplified_null_return": true,
+        "braces": false,
+        "new_with_braces": {
+            "anonymous_class": false,
+            "named_class": false
+        }
+    }
+}
+```
+
 ### Laravel Jetstream
 
 ```bash
@@ -107,7 +130,88 @@ export default {
 };
 ```
 
-## Mmodelos, migraciones, factorias, seeders, políticas y controladores
+```bash
+code composer.json
+```
+
+ver[composer.json](./composer.json)
+
+```json
+{
+    "name": "laravel/laravel",
+    "type": "project",
+    "description": "The skeleton application for the Laravel framework.",
+    "keywords": ["laravel", "framework"],
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "laravel/framework": "^11.9",
+        "laravel/jetstream": "^5.1",
+        "laravel/sanctum": "^4.0",
+        "laravel/tinker": "^2.9",
+        "livewire/livewire": "^3.0"
+    },
+    "require-dev": {
+        "fakerphp/faker": "^1.23",
+        "laravel/pint": "^1.16",
+        "laravel/sail": "^1.26",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.0",
+        "phpunit/phpunit": "^11.0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi",
+            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
+            "@php artisan migrate --graceful --ansi"
+        ],
+        "test": [
+            "pint",
+            "@php artisan test"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
+```
+
+## Modelos, migraciones, factorias, seeders, políticas y controladores
 
 ### Creación de Modelos
 
@@ -161,7 +265,7 @@ class Post extends Model
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
-    }    
+    }
 }
 ```
 
@@ -188,18 +292,18 @@ class PostTest extends TestCase
 
     /**
      * It has the correct fillable attributes.
-    */
+     */
     public function test_it_has_the_correct_fillable_attributes()
     {
-        $post = new Post();
+        $post = new Post;
         $fillable = ['id', 'user_id', 'title', 'slug', 'description', 'body'];
 
         $this->assertEquals($fillable, $post->getFillable());
-    }    
+    }
 
     /**
      * A post belongs to a user.
-    */
+     */
     public function test_a_post_belongs_to_a_user()
     {
         $post = Post::factory()->create();
@@ -209,7 +313,7 @@ class PostTest extends TestCase
 
     /**
      * A post has many comments.
-    */
+     */
     public function test_a_post_has_many_comments()
     {
         $post = Post::factory()->create();
@@ -221,7 +325,7 @@ class PostTest extends TestCase
 
     /**
      * A post can be created.
-    */
+     */
     public function test_a_post_can_be_created()
     {
         $user = User::factory()->create();
@@ -230,7 +334,7 @@ class PostTest extends TestCase
             'title' => 'Test Post',
             'slug' => 'test-post',
             'description' => 'A short description',
-            'body' => 'This is the body of the test post.'
+            'body' => 'This is the body of the test post.',
         ];
         $post = Post::create($data);
 
@@ -317,7 +421,7 @@ class CommentTest extends TestCase
      */
     public function test_it_has_the_correct_fillable_attributes()
     {
-        $comment = new Comment();
+        $comment = new Comment;
         $fillable = ['id', 'user_id', 'post_id', 'body'];
 
         $this->assertEquals($fillable, $comment->getFillable());
@@ -342,7 +446,7 @@ class CommentTest extends TestCase
 
         $this->assertInstanceOf(Post::class, $comment->post);
     }
-    
+
     /**
      * A comment can be created.
      */
@@ -375,12 +479,12 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -479,7 +583,7 @@ class UserTest extends TestCase
      */
     public function test_it_has_the_correct_fillable_attributes()
     {
-        $user = new User();
+        $user = new User;
         $fillable = ['name', 'email', 'password'];
 
         $this->assertEquals($fillable, $user->getFillable());
@@ -508,7 +612,7 @@ class UserTest extends TestCase
         $this->assertCount(10, $user->posts);
         $this->assertInstanceOf(Post::class, $user->posts->first());
     }
-    
+
     /**
      * An user can be created.
      */
@@ -928,6 +1032,11 @@ use Illuminate\Support\Str;
  */
 class PostFactory extends Factory
 {
+    /**
+     * Data used for testing.
+     *
+     * @var string
+     */
     protected $data = [
         1 => [
             'title' => '😎 SQL Injection en Laravel: ¡Cuando las consultas se vuelven rebeldes! 😈',
@@ -1018,13 +1127,13 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
-        $rand = rand(1,20);
+        $rand = rand(1, 20);
         $user_id = User::factory();
         $title = $this->data[$rand]['title'];
         $slug = Str::slug(fake()->uuid());
         $description = $this->data[$rand]['description'];
-        $body = file_get_contents(database_path("factories/fixtures/post-". $rand .".md"));
-        $date = Carbon::createFromTimestamp(rand(Carbon::now()->subYears(1)->timestamp, Carbon::now()->timestamp));;
+        $body = file_get_contents(database_path('factories/fixtures/post-'.$rand.'.md'));
+        $date = Carbon::createFromTimestamp(rand(Carbon::now()->subYears(1)->timestamp, Carbon::now()->timestamp));
 
         return [
             'user_id' => $user_id,
@@ -1058,10 +1167,10 @@ use Tests\TestCase;
 
 class PostFactoryTest extends TestCase
 {
-    use RefreshDatabase; 
+    use RefreshDatabase;
 
     /**
-     * test post factory creates valid post
+     * Post factory creates valid post
      */
     public function test_post_factory_creates_valid_post()
     {
@@ -1109,48 +1218,34 @@ Ver [database/factories/CommentFactory.php](./database/factories/CommentFactory.
 ```php
 <?php
 
-namespace Tests\Feature\Database\Factories;
+namespace Database\Factories;
 
-use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-class CommentFactoryTest extends TestCase
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Comment>
+ */
+class CommentFactory extends Factory
 {
-    use RefreshDatabase; 
-
     /**
-     * test comment factory creates valid comment
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
      */
-    public function test_comment_factory_creates_valid_comment()
+    public function definition(): array
     {
-        $comment = Comment::factory()->create();
+        $date = Carbon::createFromTimestamp(rand(Carbon::now()->subYears(1)->timestamp, Carbon::now()->timestamp));
 
-        $this->assertDatabaseHas('comments', [
-            'id' => $comment->id,
-            'user_id' => $comment->user_id,
-            'post_id' => $comment->post_id,
-            'body' => $comment->body,
-            'created_at' => $comment->created_at,
-            'updated_at' => $comment->updated_at,
-        ]);
-
-        $this->assertNotNull($comment->id);
-        $this->assertNotNull($comment->user_id);
-        $this->assertNotNull($comment->post_id);
-        $this->assertNotEmpty($comment->body);
-        $this->assertNotEmpty($comment->created_at);
-        $this->assertNotEmpty($comment->updated_at);
-
-        $this->assertIsInt($comment->id);
-        $this->assertInstanceOf(User::class, $comment->user);
-        $this->assertInstanceOf(Post::class, $comment->post);
-        $this->assertIsString($comment->body);
-        $this->assertInstanceOf(Carbon::class, $comment->created_at);
-        $this->assertInstanceOf(Carbon::class, $comment->updated_at);
+        return [
+            'user_id' => User::factory(),
+            'post_id' => Post::factory(),
+            'body' => fake()->sentences(5, true),
+            'created_at' => $date,
+            'updated_at' => $date,
+        ];
     }
 }
 ```
@@ -1175,10 +1270,10 @@ use Tests\TestCase;
 
 class CommentFactoryTest extends TestCase
 {
-    use RefreshDatabase; 
+    use RefreshDatabase;
 
     /**
-     * Test comment factory creates valid comment
+     * Comment factory creates valid comment
      */
     public function test_comment_factory_creates_valid_comment()
     {
@@ -2352,4 +2447,10 @@ Route::post('/posts/{post}/comments', [CommentController::class, 'store'])
 Route::delete('/posts/{post}/comments/{comment}', [CommentController::class, 'destroy'])
     ->middleware('auth')
     ->name('posts.comments.destroy');
+```
+
+## Instalación de Larastan
+
+```bash
+
 ```

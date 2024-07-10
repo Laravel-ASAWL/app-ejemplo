@@ -4,18 +4,17 @@ namespace Tests\Feature\Resources\Views\Posts;
 
 use App\Models\Comment;
 use App\Models\Post;
-use App\Models\User;
-use Illuminate\Support\Facades\View;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\View;
 use Tests\TestCase;
 
 class ShowBladeTest extends TestCase
 {
-    use RefreshDatabase; 
+    use RefreshDatabase;
 
     /**
      * Show blade renders post with comments.
-     */   
+     */
     public function test_show_blade_renders_post_with_comments()
     {
         $post = Post::factory()->create();
@@ -33,7 +32,7 @@ class ShowBladeTest extends TestCase
 
     /**
      * Show blade renders post without comments.
-     */   
+     */
     public function test_show_blade_renders_post_without_comments()
     {
         $post = Post::factory()->create();

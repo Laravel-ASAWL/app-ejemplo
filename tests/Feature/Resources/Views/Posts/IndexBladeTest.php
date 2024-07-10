@@ -3,17 +3,17 @@
 namespace Tests\Feature\Resources\Views\Posts;
 
 use App\Models\Post;
-use Illuminate\Support\Facades\View;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\View;
 use Tests\TestCase;
 
 class IndexBladeTest extends TestCase
 {
-    use RefreshDatabase; 
+    use RefreshDatabase;
 
     /**
      * Index blade renders with posts.
-     */   
+     */
     public function test_index_blade_renders_with_posts()
     {
         Post::factory(50)->create();
@@ -32,7 +32,7 @@ class IndexBladeTest extends TestCase
 
     /**
      * Index blade renders without posts.
-     */   
+     */
     public function test_index_blade_renders_without_posts()
     {
         View::share('posts', null);

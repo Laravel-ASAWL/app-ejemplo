@@ -9,8 +9,6 @@ class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * 
-     * @return View
      */
     public function index(): View
     {
@@ -21,10 +19,6 @@ class PostController extends Controller
 
     /**
      * Display the specified resource.
-     * 
-     * @param string $slug
-     * 
-     * @return View
      */
     public function show(string $slug): View
     {

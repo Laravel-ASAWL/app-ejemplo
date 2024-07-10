@@ -17,7 +17,7 @@ class CommentTest extends TestCase
      */
     public function test_it_has_the_correct_fillable_attributes()
     {
-        $comment = new Comment();
+        $comment = new Comment;
         $fillable = ['id', 'user_id', 'post_id', 'body'];
 
         $this->assertEquals($fillable, $comment->getFillable());
@@ -42,7 +42,7 @@ class CommentTest extends TestCase
 
         $this->assertInstanceOf(Post::class, $comment->post);
     }
-    
+
     /**
      * A comment can be created.
      */

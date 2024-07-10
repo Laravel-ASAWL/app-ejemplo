@@ -4,27 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Post;
-use Illuminate\Http\Request;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class CommentController extends Controller
 {
-     /**
+    /**
      * Store a newly created resource in storage.
-     * 
+     *
      * @throws mixed
      */
     public function store(Request $request, Post $post)
     {
         try {
             $this->authorize('create', Comment::class);
-            
+
             $data = $request->validate([
                 'body' => [
-                    'required', 
-                    'string', 
-                    'min:25', 
+                    'required',
+                    'string',
+                    'min:25',
                     'max:255',
                 ],
             ], [
@@ -33,13 +33,13 @@ class CommentController extends Controller
                 'body.min' => __('The comment must be at least 25 characters long.'),
                 'body.max' => __('The comment cannot exceed 255 characters.'),
             ]);
-    
+
             $post->comments()->create([
                 'user_id' => $request->user()->id,
                 'post_id' => $post->id,
                 'body' => $data['body'],
             ]);
-        
+
             return to_route('posts.show', $post->slug)
                 ->with('success', __('Comment created successfully!'))
                 ->withFragment('comments');
@@ -58,7 +58,7 @@ class CommentController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     * 
+     *
      * @throws mixed
      */
     public function destroy(Post $post, Comment $comment)

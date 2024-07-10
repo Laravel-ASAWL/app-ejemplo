@@ -17,7 +17,7 @@ class UserTest extends TestCase
      */
     public function test_it_has_the_correct_fillable_attributes()
     {
-        $user = new User();
+        $user = new User;
         $fillable = ['name', 'email', 'password'];
 
         $this->assertEquals($fillable, $user->getFillable());
@@ -46,7 +46,7 @@ class UserTest extends TestCase
         $this->assertCount(10, $user->posts);
         $this->assertInstanceOf(Post::class, $user->posts->first());
     }
-    
+
     /**
      * An user can be created.
      */

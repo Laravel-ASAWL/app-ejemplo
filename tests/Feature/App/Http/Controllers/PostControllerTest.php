@@ -18,7 +18,7 @@ class PostControllerTest extends TestCase
     public function test_index_displays_message_when_no_posts()
     {
         $response = $this->get(route('posts.index'));
-        
+
         $this->assertDatabaseCount('posts', 0);
         $response->assertSee(__('Be the first to share your thoughts and opinions!'));
     }
@@ -31,7 +31,7 @@ class PostControllerTest extends TestCase
         Post::factory(50)->create();
         $posts = Post::latest()->with('user')->paginate(10);
         $posts = $posts->fragment('posts');
-        
+
         $response = $this->get(route('posts.index'));
 
         $response->assertOk();
@@ -39,7 +39,7 @@ class PostControllerTest extends TestCase
         $response->assertViewHas('posts', $posts);
         $this->assertInstanceOf(LengthAwarePaginator::class, $posts);
     }
- 
+
     /**
      * Show page returns 404 for invalid slug.
      */
@@ -56,9 +56,9 @@ class PostControllerTest extends TestCase
     public function test_show_displays_post()
     {
         $post = Post::factory()->create();
-        
+
         $response = $this->get(route('posts.show', $post->slug));
-        
+
         $response->assertOk();
         $response->assertViewIs('posts.show');
         $response->assertViewHas('post', $post);
@@ -70,9 +70,9 @@ class PostControllerTest extends TestCase
     public function test_show_displays_message_to_guest_user()
     {
         $post = Post::factory()->create();
-        
+
         $response = $this->get(route('posts.show', $post->slug));
-        
+
         $response->assertOk();
         $response->assertViewIs('posts.show');
         $response->assertViewHas('post', $post);

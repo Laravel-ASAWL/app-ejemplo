@@ -39,14 +39,14 @@ class CreateCommentsTableTest extends TestCase
     protected $foreign_keys = [
         0 => [
             'table' => 'posts',
-            'from' =>  'post_id',
+            'from' => 'post_id',
             'to' => 'id',
             'on_update' => 'NO ACTION',
             'on_delete' => 'CASCADE',
         ],
         1 => [
             'table' => 'users',
-            'from' =>  'user_id',
+            'from' => 'user_id',
             'to' => 'id',
             'on_update' => 'NO ACTION',
             'on_delete' => 'RESTRICT',
@@ -66,7 +66,7 @@ class CreateCommentsTableTest extends TestCase
      */
     public function test_comments_table_has_correct_column_names()
     {
-        $column_names = []; 
+        $column_names = [];
 
         foreach ($this->columns as $key => $value) {
             $column_names[] = $key;
@@ -83,7 +83,7 @@ class CreateCommentsTableTest extends TestCase
     public function test_comments_table_has_correct_column_types()
     {
         $column_types = DB::select(
-            DB::raw("PRAGMA table_info($this->table)")->getValue(DB::connection()->getQueryGrammar()) 
+            DB::raw("PRAGMA table_info($this->table)")->getValue(DB::connection()->getQueryGrammar())
         );
 
         foreach ($column_types as $key => $value) {
@@ -97,9 +97,9 @@ class CreateCommentsTableTest extends TestCase
     public function test_comments_table_has_primary_key()
     {
         $primary_keys = DB::select(
-            DB::raw("PRAGMA table_info($this->table)")->getValue(DB::connection()->getQueryGrammar()) 
+            DB::raw("PRAGMA table_info($this->table)")->getValue(DB::connection()->getQueryGrammar())
         );
-    
+
         foreach ($primary_keys as $key => $value) {
             if ($value->name === $this->primary_key) {
                 $this->assertEquals(1, $value->pk);
@@ -113,7 +113,7 @@ class CreateCommentsTableTest extends TestCase
     public function test_comments_table_has_foreign_keys()
     {
         $foreignKeys = DB::select(
-            DB::raw("PRAGMA foreign_key_list($this->table)")->getValue(DB::connection()->getQueryGrammar()) 
+            DB::raw("PRAGMA foreign_key_list($this->table)")->getValue(DB::connection()->getQueryGrammar())
         );
 
         foreach ($this->foreign_keys as $count => $foreign_key) {

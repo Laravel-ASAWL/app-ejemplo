@@ -11,10 +11,10 @@ use Tests\TestCase;
 
 class CommentFactoryTest extends TestCase
 {
-    use RefreshDatabase; 
+    use RefreshDatabase;
 
     /**
-     * Test comment factory creates valid comment
+     * Comment factory creates valid comment
      */
     public function test_comment_factory_creates_valid_comment()
     {

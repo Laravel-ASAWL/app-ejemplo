@@ -10,10 +10,10 @@ use Tests\TestCase;
 
 class PostFactoryTest extends TestCase
 {
-    use RefreshDatabase; 
+    use RefreshDatabase;
 
     /**
-     * Test post factory creates valid post
+     * Post factory creates valid post
      */
     public function test_post_factory_creates_valid_post()
     {
