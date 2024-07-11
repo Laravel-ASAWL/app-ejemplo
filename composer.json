@@ -8,7 +8,9 @@
         "php": "^8.2",
         "laravel/framework": "^11.9",
         "laravel/jetstream": "^5.1",
+        "laravel/pulse": "^1.2",
         "laravel/sanctum": "^4.0",
+        "laravel/telescope": "^5.1",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.0"
     },

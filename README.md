@@ -82,6 +82,22 @@ Ver [pint.json](./pint.json)
 }
 ```
 
+### Laravel Telescope
+
+```bash
+composer require laravel/telescope
+php artisan telescope:install 
+php artisan migrate
+```
+
+### Laravel Pulse
+
+```bash
+composer require laravel/pulse
+php artisan vendor:publish --provider="Laravel\Pulse\PulseServiceProvider"
+php artisan migrate
+```
+
 ### Laravel Jetstream
 
 ```bash
@@ -211,7 +227,7 @@ ver[composer.json](./composer.json)
 }
 ```
 
-## Modelos, migraciones, factorias, seeders, políticas y controladores
+## Modelos, migraciones, factorias, seeders, políticas, requests y controladores
 
 ### Creación de Modelos
 
@@ -1384,7 +1400,7 @@ php artican artisan migrate:fresh --seed
 
 ### Creación de Políticas
 
-### Comentarios
+#### Comentarios
 
 ```bash
 php artisan make:policy CommentPolicy
@@ -1426,6 +1442,20 @@ class CommentPolicy
         return $user->id === $comment->user_id || $user->id === $post->user_id;
     }
 }
+```
+
+### Creación de Requests
+
+#### Commentarios
+
+```bash
+php artisan make:request StoreRequestComment
+```
+
+Ver [app/Http/Requests/StoreRequestComment.php](./app/Http/Requests/StoreRequestComment.php)
+
+```php
+
 ```
 
 ### Creación de Controladores
