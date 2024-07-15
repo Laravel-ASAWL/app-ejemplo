@@ -29,11 +29,14 @@ class PostControllerTest extends TestCase
     public function test_index_displays_paginated_posts()
     {
         Post::factory(50)->create();
-        $posts = Post::latest()->with('user')->paginate(10);
+        $posts = Post::latest()
+            ->select('title', 'slug', 'description', 'created_at')
+            ->paginate(10);
         $posts = $posts->fragment('posts');
 
         $response = $this->get(route('posts.index'));
 
+        $this->assertDatabaseCount('posts', 50);
         $response->assertOk();
         $response->assertViewIs('posts.index');
         $response->assertViewHas('posts', $posts);
@@ -47,6 +50,7 @@ class PostControllerTest extends TestCase
     {
         $response = $this->get(route('posts.show', 'post-invalid-slug'));
 
+        $this->assertDatabaseCount('posts', 0);
         $response->assertNotFound();
     }
 
@@ -59,6 +63,7 @@ class PostControllerTest extends TestCase
 
         $response = $this->get(route('posts.show', $post->slug));
 
+        $this->assertDatabaseCount('posts', 1);
         $response->assertOk();
         $response->assertViewIs('posts.show');
         $response->assertViewHas('post', $post);
@@ -73,6 +78,7 @@ class PostControllerTest extends TestCase
 
         $response = $this->get(route('posts.show', $post->slug));
 
+        $this->assertDatabaseCount('posts', 1);
         $response->assertOk();
         $response->assertViewIs('posts.show');
         $response->assertViewHas('post', $post);
@@ -85,12 +91,14 @@ class PostControllerTest extends TestCase
     public function test_show_displays_post_with_paginated_comments()
     {
         $post = Post::factory()->create();
-        Comment::factory()->create(['post_id' => $post->id]);
-        $comments = Comment::latest()->with('user')->paginate(10);
+        Comment::factory(50)->create(['post_id' => $post->id]);
+        $comments = Comment::latest()->with('user:id,name,email')->paginate(10);
         $comments = $comments->fragment('comments');
 
         $response = $this->get(route('posts.show', $post->slug));
 
+        $this->assertDatabaseCount('posts', 1);
+        $this->assertDatabaseCount('comments', 50);
         $response->assertOk();
         $response->assertViewIs('posts.show');
         $response->assertViewHas('post', $post);

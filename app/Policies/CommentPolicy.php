@@ -21,7 +21,9 @@ class CommentPolicy
      */
     public function delete(User $user, Comment $comment): bool
     {
-        $post = Post::where('id', $comment->post_id)->first();
+        $post = Post::where('id', $comment->post_id)
+            ->select('user_id')
+            ->first();
 
         return $user->id === $comment->user_id || $user->id === $post->user_id;
     }

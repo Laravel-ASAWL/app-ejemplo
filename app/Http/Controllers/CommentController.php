@@ -16,7 +16,7 @@ class CommentController extends Controller
     public function store(StoreRequestComment $request, Post $post): RedirectResponse
     {
         if (! Gate::allows('create', Comment::class)) {
-            return redirect()->back()
+            return redirect()->route('posts.show', $post->slug)
                 ->withInput()
                 ->withErrors(['message' => __('You are not authorized to create comments.')])
                 ->withFragment('comments');
@@ -28,7 +28,7 @@ class CommentController extends Controller
             'body' => $request->validated('body'),
         ]);
 
-        return redirect()->back()
+        return redirect()->route('posts.show', $post->slug)
             ->with('success', __('Comment created successfully!'))
             ->withFragment('comments');
     }
@@ -39,15 +39,15 @@ class CommentController extends Controller
     public function destroy(Post $post, Comment $comment): RedirectResponse
     {
         if (! Gate::allows('delete', $comment)) {
-            return redirect()->back()
+            return redirect()->route('posts.show', $post->slug)
                 ->withInput()
-                ->with('errors', [__('You are not authorized to delete comments.')])
+                ->withErrors(['message' => __('You are not authorized to delete comments.')])
                 ->withFragment('comments');
         }
 
         $comment->delete();
 
-        return redirect()->back()
+        return redirect()->route('posts.show', $post->slug)
             ->with('success', __('Comment deleted successfully!'))
             ->withFragment('comments');
     }

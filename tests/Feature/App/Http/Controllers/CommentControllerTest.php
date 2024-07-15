@@ -19,7 +19,7 @@ class CommentControllerTest extends TestCase
     public function test_authorized_user_can_create_comment()
     {
         $user = User::factory()->create();
-        $post = Post::factory()->create();
+        $post = Post::factory()->for($user)->create();
         Gate::define('create', fn (User $user, $comment) => $user->hasVerifiedEmail());
         $this->actingAs($user);
 
@@ -51,7 +51,7 @@ class CommentControllerTest extends TestCase
         ]);
 
         $response->assertRedirectContains(route('posts.show', $post->slug).'#comments');
-        $response->assertSessionHas('errors', [__('You are not authorized to create comments.')]);
+        $response->assertSessionHasErrors('message', __('You are not authorized to create comments.'));
         $this->assertDatabaseCount('comments', 0);
     }
 
@@ -197,7 +197,7 @@ class CommentControllerTest extends TestCase
         $response = $this->delete(route('posts.comments.destroy', [$post, $comment]));
 
         $response->assertRedirectContains(route('posts.show', $post->slug).'#comments');
-        $response->assertSessionHas('errors', [__('You are not authorized to delete comments.')]);
+        $response->assertSessionHasErrors('message', [__('You are not authorized to delete comments.')]);
         $this->assertDatabaseHas('comments', ['id' => $comment->id]);
     }
 

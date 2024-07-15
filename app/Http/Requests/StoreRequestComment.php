@@ -51,8 +51,8 @@ class StoreRequestComment extends FormRequest
      */
     protected function failedValidation(Validator $validator): array
     {
-        throw ValidationException::withMessages([
-            'errors' => $validator->errors(),
-        ])->redirectTo($this->getRedirectUrl().'#comments');
+        throw ValidationException::withMessages(
+            $validator->errors()->getMessages()
+        )->redirectTo(route('posts.show', $this->post->slug).'#comments');
     }
 }
