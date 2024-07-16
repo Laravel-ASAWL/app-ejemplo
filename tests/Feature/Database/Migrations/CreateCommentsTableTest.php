@@ -54,7 +54,7 @@ class CreateCommentsTableTest extends TestCase
     ];
 
     /**
-     * Test comments table exists.
+     * Comments table exists.
      */
     public function test_comments_table_exists()
     {
@@ -62,7 +62,7 @@ class CreateCommentsTableTest extends TestCase
     }
 
     /**
-     * Test comments table has correct column names.
+     * Comments table has correct column names.
      */
     public function test_comments_table_has_correct_column_names()
     {
@@ -78,7 +78,7 @@ class CreateCommentsTableTest extends TestCase
     }
 
     /**
-     * Test comments table has correct column names.
+     * Comments table has correct column names.
      */
     public function test_comments_table_has_correct_column_types()
     {
@@ -92,7 +92,7 @@ class CreateCommentsTableTest extends TestCase
     }
 
     /**
-     * Test comments table has primary key.
+     * Comments table has primary key.
      */
     public function test_comments_table_has_primary_key()
     {
@@ -108,7 +108,7 @@ class CreateCommentsTableTest extends TestCase
     }
 
     /**
-     * Test comments table has foreign keys.
+     * Comments table has foreign keys.
      */
     public function test_comments_table_has_foreign_keys()
     {

@@ -56,7 +56,7 @@ class CreatePostsTableTest extends TestCase
     ];
 
     /**
-     * Test posts table exists.
+     * Posts table exists.
      */
     public function test_posts_table_exists()
     {
@@ -64,7 +64,7 @@ class CreatePostsTableTest extends TestCase
     }
 
     /**
-     * Test posts table has correct column names.
+     * Posts table has correct column names.
      */
     public function test_posts_table_has_correct_column_names()
     {
@@ -80,7 +80,7 @@ class CreatePostsTableTest extends TestCase
     }
 
     /**
-     * Test posts table has correct column names.
+     * Posts table has correct column names.
      */
     public function test_posts_table_has_correct_column_types()
     {
@@ -94,7 +94,7 @@ class CreatePostsTableTest extends TestCase
     }
 
     /**
-     * Test comments table has primary key.
+     * Comments table has primary key.
      */
     public function test_posts_table_has_primary_key()
     {
@@ -110,7 +110,7 @@ class CreatePostsTableTest extends TestCase
     }
 
     /**
-     * Test posts table has foreign keys.
+     * Posts table has foreign keys.
      */
     public function test_posts_table_has_foreign_keys()
     {
@@ -126,7 +126,7 @@ class CreatePostsTableTest extends TestCase
     }
 
     /**
-     * Test posts table has unique indexes.
+     * Posts table has unique indexes.
      */
     public function test_posts_table_has_unique_indexes()
     {

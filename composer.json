@@ -14,12 +14,13 @@
         "livewire/livewire": "^3.0"
     },
     "require-dev": {
-        "enlightn/enlightn": "^2.10",
+        "enlightn/security-checker": "^2.0",
         "fakerphp/faker": "^1.23",
         "larastan/larastan": "^2.0",
         "laravel/pint": "^1.16",
         "laravel/sail": "^1.26",
         "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.0",
         "phpunit/phpunit": "^11.0.1",
         "roave/security-advisories": "dev-latest"
     },
@@ -51,12 +52,14 @@
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --graceful --ansi"
         ],
-        "test": [
+        "tester": [
+            "composer diagnose",
             "composer audit",
-            "pint",
-            "./vendor/bin/phpunit",
+            "@php ./vendor/bin/security-checker security:check ./composer.lock",
             "./vendor/bin/phpstan analyse",
-            "@php -d memory_limit=1G artisan enlightn"
+            "pint",
+            "@php artisan optimize:clear",
+            "@php artisan test"
         ]
     },
     "extra": {

@@ -11,7 +11,7 @@ class DatabaseSeederTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * Test database seeder runs successfully
+     * Database seeder runs successfully
      */
     public function test_database_seeder_runs_successfully()
     {
