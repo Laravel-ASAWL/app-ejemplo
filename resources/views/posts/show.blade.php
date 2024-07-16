@@ -14,7 +14,7 @@
                         <div class="mt-6">
                             <ul class="flex flex-wrap text-sm leading-6 -mt-6 -mx-5">
                                 <li class="flex items-center font-medium whitespace-nowrap px-5 mt-6">
-                                    <img src="{{ $post->user->profile_photo_url }}" alt="" class="mr-3 w-9 h-9 rounded-full bg-slate-50 dark:bg-slate-800" decoding="async">
+                                    <img src="{{ $post->user?->profile_photo_url }}" alt="" class="mr-3 w-9 h-9 rounded-full bg-slate-50 dark:bg-slate-800" decoding="async">
                                     <div class="text-sm leading-4">
                                         <div class="text-slate-900 dark:text-slate-200">{{ $post->user->name }}</div>
                                         <div class="mt-1"><a href="mailto:{{ $post->user->email }}" class="text-sky-500 hover:text-sky-600 dark:text-sky-400">{{ $post->user->email }}</a></div>

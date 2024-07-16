@@ -1,69 +1,43 @@
 # Laravel ASAWL - Aplicación Web de Ejemplo
 
-## Un Enfoque Práctico Guiado por la Metodología de Análisis de Seguridad en Aplicaciones Web Laravel (ASAWL)
-
-Este programa integral tiene como objetivo capacitar a desarrolladores en las mejores prácticas de seguridad para aplicaciones web, haciendo uso de la metodología ASAWL. A través de la creación paso a paso de una aplicación web tipo blog con el framework Laravel, se explorarán las vulnerabilidades más comunes y sus respectivas estrategias de mitigación.
-
-### Funcionalidades Clave de la Aplicación Web de Ejemplo
-
-Desarrollo seguro de una aplicación web tipo blog con la gestión completa de usuarios, artículos y comentarios.
-
-### Enfoque Metodológico:
-
-El programa se basa en la metodología ASAWL, la cual proporciona un marco estructurado para el aprendizaje y la aplicación de conceptos de seguridad que será  integrado a lo largo del ciclo de vida del desarrollo de software (SDLC).
-
-### Mitigación de Vulnerabilidades en el SDLC:
-
-#### Diseño y Arquitectura
-
-Mitigación del Diseño Inseguro, inyección SQL y XSS, mediante:
-
-- Principio de mínimo privilegio: Otorgar solo los permisos necesarios.
-- No Confiar en la Entrada del Usuario: Valida y sanitiza estrictamente todos los datos de entrada del usuario.
-
-#### Desarrollo
-
-Mitigación de Inyección SQL, XSS, CSRF, Autenticación Insegura, Exposición de Datos Sensibles, Componentes Vulnerables y Desactualizados y Fallos de Validación de Entrada, mediante:
-
-- Utilizar consultas preparadas y escapar correctamente los datos de entrada.
-- Escapar la salida de datos y utilizar un sistema de plantillas seguro.
-- Implementar tokens anti-CSRF en formularios y peticiones.
-- Utilizar algoritmos de hashing robustos para contraseñas, implementar autenticación multifactor y limitar intentos de inicio de sesión.
-- Encriptar datos sensibles en reposo y en tránsito, minimizar la exposición de información personal.
-- Mantener las dependencias actualizadas y utilizar herramientas de análisis de vulnerabilidades.
-- Validar estrictamente los datos de entrada en el lado del servidor y utilizar filtros de sanitización.
-
-#### Pruebas
-
-Mitigación del Diseño Inseguro, mediante:
-
-- Realizar pruebas de penetración y utilizar herramientas de análisis estático y dinámico.
-
-#### Despliegue
-
-Mitigación de Configuración de Seguridad Incorrecta, mediante:
-
-- Configurar servidores web y bases de datos.
-- Deshabilitar funciones innecesarias y aplicar parches de seguridad.
-
-#### Mantenimiento
-
-Mitigación del Registro y Monitoreo Insuficientes, mediante:
-
-- Implementar un sistema de registro y monitoreo para detectar y responder a incidentes de seguridad.
-- Implementar un sistema WAF para asegurar que la aplicación web no sea vulnerable a ataques de seguridad.
-
-### Audiencia Objetivo
-
-Este programa está diseñado para desarrolladores web que deseen adquirir habilidades prácticas en seguridad de aplicaciones. Se recomienda tener conocimientos básicos de Laravel y desarrollo web en general.
-
 ## Instalación inicial
+
+### Larastan
+
+```bash
+composer require larastan/larastan:^2.0 --dev
+```
+
+Ver[phpstan.neon](./phpstan.neon)
+
+```neon
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    paths:
+        - app/
+    level: 5
+    excludePaths:
+        - app/Actions/
+```
+
+### Security Advisors
+
+```bash
+composer require --dev roave/security-advisories:dev-latest
+```
+
+###
+
+```bash
+composer require enlightn/enlightn --dev
+```
 
 ## Instalación de Laravel Pint
 
 ```bash
 composer require laravel/pint --dev
-code pint.json
 ```
 
 Ver [pint.json](./pint.json)
@@ -86,15 +60,7 @@ Ver [pint.json](./pint.json)
 
 ```bash
 composer require laravel/telescope
-php artisan telescope:install 
-php artisan migrate
-```
-
-### Laravel Pulse
-
-```bash
-composer require laravel/pulse
-php artisan vendor:publish --provider="Laravel\Pulse\PulseServiceProvider"
+php artisan telescope:install
 php artisan migrate
 ```
 
@@ -103,6 +69,7 @@ php artisan migrate
 ```bash
 composer require laravel/jetstream
 php artisan jetstream:install livewire --dark
+php artisan migrate
 ```
 
 ### TailwindCSS - Flowbite
@@ -153,78 +120,7 @@ code composer.json
 ver[composer.json](./composer.json)
 
 ```json
-{
-    "name": "laravel/laravel",
-    "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
-    "license": "MIT",
-    "require": {
-        "php": "^8.2",
-        "laravel/framework": "^11.9",
-        "laravel/jetstream": "^5.1",
-        "laravel/sanctum": "^4.0",
-        "laravel/tinker": "^2.9",
-        "livewire/livewire": "^3.0"
-    },
-    "require-dev": {
-        "fakerphp/faker": "^1.23",
-        "laravel/pint": "^1.16",
-        "laravel/sail": "^1.26",
-        "mockery/mockery": "^1.6",
-        "nunomaduro/collision": "^8.0",
-        "phpunit/phpunit": "^11.0.1"
-    },
-    "autoload": {
-        "psr-4": {
-            "App\\": "app/",
-            "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/"
-        }
-    },
-    "scripts": {
-        "post-autoload-dump": [
-            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
-        ],
-        "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
-        ],
-        "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ],
-        "post-create-project-cmd": [
-            "@php artisan key:generate --ansi",
-            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
-            "@php artisan migrate --graceful --ansi"
-        ],
-        "test": [
-            "pint",
-            "@php artisan test"
-        ]
-    },
-    "extra": {
-        "laravel": {
-            "dont-discover": []
-        }
-    },
-    "config": {
-        "optimize-autoloader": true,
-        "preferred-install": "dist",
-        "sort-packages": true,
-        "allow-plugins": {
-            "pestphp/pest-plugin": true,
-            "php-http/discovery": true
-        }
-    },
-    "minimum-stability": "stable",
-    "prefer-stable": true
-}
+
 ```
 
 ## Modelos, migraciones, factorias, seeders, políticas, requests y controladores

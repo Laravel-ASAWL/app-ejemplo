@@ -8,19 +8,20 @@
         "php": "^8.2",
         "laravel/framework": "^11.9",
         "laravel/jetstream": "^5.1",
-        "laravel/pulse": "^1.2",
         "laravel/sanctum": "^4.0",
         "laravel/telescope": "^5.1",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.0"
     },
     "require-dev": {
+        "enlightn/enlightn": "^2.10",
         "fakerphp/faker": "^1.23",
+        "larastan/larastan": "^2.0",
         "laravel/pint": "^1.16",
         "laravel/sail": "^1.26",
         "mockery/mockery": "^1.6",
-        "nunomaduro/collision": "^8.0",
-        "phpunit/phpunit": "^11.0.1"
+        "phpunit/phpunit": "^11.0.1",
+        "roave/security-advisories": "dev-latest"
     },
     "autoload": {
         "psr-4": {
@@ -51,8 +52,11 @@
             "@php artisan migrate --graceful --ansi"
         ],
         "test": [
+            "composer audit",
             "pint",
-            "@php artisan test"
+            "./vendor/bin/phpunit",
+            "./vendor/bin/phpstan analyse",
+            "@php -d memory_limit=1G artisan enlightn"
         ]
     },
     "extra": {

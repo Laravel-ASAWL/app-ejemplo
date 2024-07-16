@@ -21,10 +21,10 @@ Route::get('/posts/{post:slug}', [PostController::class, 'show'])
     ->name('posts.show');
 
 /* Comments Routes */
-Route::post('/posts/{post}/comments', [CommentController::class, 'store'])
-    ->middleware('auth')
-    ->name('posts.comments.store');
+Route::middleware(['auth'])->group(function () {
+    Route::post('/posts/{post}/comments', [CommentController::class, 'store'])
+        ->name('posts.comments.store');
 
-Route::delete('/posts/{post}/comments/{comment}', [CommentController::class, 'destroy'])
-    ->middleware('auth')
-    ->name('posts.comments.destroy');
+    Route::delete('/posts/{post}/comments/{comment}', [CommentController::class, 'destroy'])
+        ->name('posts.comments.destroy');
+});
