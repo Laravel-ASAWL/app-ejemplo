@@ -52,16 +52,22 @@
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --graceful --ansi"
         ],
-        "tester": [
+        "tdd": [
             "clear",
-            "composer diagnose",
-            "composer audit",
-            "@php ./vendor/bin/security-checker security:check ./composer.lock",
             "pint",
             "@php artisan optimize:clear",
             "echo '' > storage/logs/laravel.log",
-            "./vendor/bin/phpstan analyse",
             "@php artisan test"
+        ],
+        "sast": [
+            "clear",
+            "./vendor/bin/phpstan analyse"
+        ],
+        "sca": [
+            "clear",
+            "composer diagnose",
+            "composer audit",
+            "@php ./vendor/bin/security-checker security:check ./composer.lock"
         ]
     },
     "extra": {
