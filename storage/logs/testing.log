@@ -1,0 +1,10 @@
+
+[2024-07-17 22:54:36] testing.INFO: ¡Comentario creado satisfactoriamente! {"user_id":1,"post_id":1,"comment_body":"Este es un comentario de prueba que debería ser creado."} 
+[2024-07-17 22:54:36] testing.WARNING: No estás autorizado para hacer comentarios. {"user_id":1,"post_id":1,"comment_body":"This is a test comment that should not be created because the email address of the user is not verified."} 
+[2024-07-17 22:54:37] testing.INFO: ¡Comentario eliminado satisfactoriamente! {"user_id":1,"post_id":1,"comment_id":1} 
+[2024-07-17 22:54:37] testing.INFO: ¡Comentario eliminado satisfactoriamente! {"user_id":1,"post_id":1,"comment_id":1} 
+[2024-07-17 22:54:37] testing.ERROR: No estás autorizado para hacer comentarios. {"user_id":1,"post_id":1,"comment_id":1} 
+[2024-07-17 22:54:37] testing.ERROR: Post not found. {"post_slug":"post-invalid-slug"} 
+[2024-07-17 22:54:41] testing.INFO: ¡Comentario creado satisfactoriamente! {"user_id":1,"post_id":1,"comment_body":"This is a test comment with more than 25 characters."} 
+[2024-07-17 22:54:41] testing.INFO: ¡Comentario eliminado satisfactoriamente! {"user_id":1,"post_id":1,"comment_id":1} 
+[2024-07-17 22:54:41] testing.ERROR: No estás autorizado para hacer comentarios. {"user_id":2,"post_id":1,"comment_id":1} 

@@ -20,20 +20,29 @@ class CommentControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $post = Post::factory()->for($user)->create();
+        $commentData = [
+            'user_id' => $user->id,
+            'post_id' => $post->id,
+            'body' => __('This is a test comment that should be created.'),
+        ];
+        $logData = [
+            'user_id' => $user->id,
+            'post_id' => $post->id,
+            'comment_body' => __('This is a test comment that should be created.'),
+        ];
         Gate::define('create', fn (User $user, $comment) => $user->hasVerifiedEmail());
         $this->actingAs($user);
 
         $response = $this->post(route('posts.comments.store', $post), [
-            'body' => 'This is a test comment with more than 25 characters.',
+            'body' => __('This is a test comment that should be created.'),
         ]);
 
+        $logFile = file_get_contents(storage_path('logs/testing.log'));
+        $this->assertStringContainsString(__('Comment created successfully!'), $logFile);
+        $this->assertStringContainsString(__('This is a test comment that should be created.'), $logFile);
         $response->assertRedirectContains(route('posts.show', $post->slug).'#comments');
         $response->assertSessionHas('success', __('Comment created successfully!'));
-        $this->assertDatabaseHas('comments', [
-            'user_id' => $user->id,
-            'post_id' => $post->id,
-            'body' => 'This is a test comment with more than 25 characters.',
-        ]);
+        $this->assertDatabaseHas('comments', $commentData);
     }
 
     /**
@@ -47,7 +56,7 @@ class CommentControllerTest extends TestCase
         $this->actingAs($user);
 
         $response = $this->post(route('posts.comments.store', $post), [
-            'body' => 'This comment should not be created because the email address of the user is not verified',
+            'body' => __('This is a test comment that should not be created because the email address of the user is not verified.'),
         ]);
 
         $response->assertRedirectContains(route('posts.show', $post->slug).'#comments');

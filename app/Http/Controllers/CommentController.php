@@ -18,18 +18,28 @@ class CommentController extends Controller
     public function store(StoreRequestComment $request, Post $post): RedirectResponse
     {
         if ((! auth()->user() instanceof Authenticatable) or (! Gate::allows('create', Comment::class))) {
-            Log::error(__('You are not authorized to create comments.'), ['auth_user' => auth()->user() ?? 'Unknown']);
+            Log::warning(__('You are not authorized to create comments.'), [
+                'user_id' => auth()->user()->id ?? 'Unknown',
+                'post_id' => $post->id,
+                'comment_body' => $request->validated('body'),
+            ]);
 
             return redirect()->route('posts.show', $post->slug)
-                ->withInput()
                 ->withErrors(['error' => __('You are not authorized to create comments.')])
-                ->withFragment('comments');
+                ->withFragment('comments')
+                ->withInput();
         }
 
         $post->comments()->create([
             'user_id' => auth()->user()->id,
             'post_id' => $post->id,
             'body' => $request->validated('body'),
+        ]);
+
+        Log::info(__('Comment created successfully!'), [
+            'user_id' => auth()->user()->id,
+            'post_id' => $post->id,
+            'comment_body' => $request->validated('body'),
         ]);
 
         return redirect()->route('posts.show', $post->slug)
@@ -43,7 +53,11 @@ class CommentController extends Controller
     public function destroy(Post $post, Comment $comment): RedirectResponse
     {
         if ((! auth()->user() instanceof Authenticatable) or (! Gate::allows('delete', $comment))) {
-            Log::error(__('You are not authorized to delete comments.'), ['auth_user' => auth()->user() ?? 'Unknown']);
+            Log::error(__('You are not authorized to delete comments.'), [
+                'user_id' => auth()->user()->id ?? 'Unknown',
+                'post_id' => $post->id,
+                'comment_id' => $comment->id,
+            ]);
 
             return redirect()->route('posts.show', $post->slug)
                 ->withInput()
@@ -52,6 +66,11 @@ class CommentController extends Controller
         }
 
         $comment->delete();
+        Log::info(__('Comment deleted successfully!'), [
+            'user_id' => auth()->user()->id,
+            'post_id' => $post->id,
+            'comment_id' => $comment->id,
+        ]);
 
         return redirect()->route('posts.show', $post->slug)
             ->with('success', __('Comment deleted successfully!'))

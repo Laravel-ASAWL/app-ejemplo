@@ -9,19 +9,23 @@ composer create-project laravel/laravel wasal-example 11.*
 code asawl-example
 ```
 
-### Security Advisors
+### Dependencias para SCA
+
+#### Security Advisors
 
 ```shell
 composer require --dev roave/security-advisories:dev-latest
 ```
 
-### Security Checker
+#### Security Checker
 
 ```shell
 composer require --dev enlightn/security-checker
 ```
 
-### Larastan
+### Dependencias para SAST
+
+#### Larastan
 
 ```shell
 composer require --dev larastan/larastan:^2.0
@@ -39,6 +43,53 @@ parameters:
     level: 5
     excludePaths:
         - app/Actions/
+```
+
+#### Phan
+
+```shell
+composer require --dev phan/phan
+```
+
+Ver[.phan/config.php](./.phan/config.php)
+
+```php
+<?php
+
+return [
+    'target_php_version' => 8.1,
+
+    'directory_list' => [
+        'app/',
+        'tests/Feature/App',
+        'tests/Feature/Database',
+        'tests/Feature/Resources',
+        'tests/Feature/Routes',
+    ],
+
+    'exclude_file_regex' => '@^vendor/.*/(tests?|Tests?)/@',
+
+    'exclude_analysis_directory_list' => [
+        'vendor/',
+    ],
+
+    'suppress_issue_types' => [
+        'PhanSuspiciousWeakTypeComparison',
+        'PhanRedundantArrayValuesCall',
+        'PhanUndeclaredClassInstanceof',
+        'PhanUndeclaredClassMethod',
+        'PhanUndeclaredClassReference',
+        'PhanUndeclaredExtendedClass',
+        'PhanUndeclaredFunction',
+        'PhanUndeclaredInterface',
+        'PhanUndeclaredMethod',
+        'PhanUndeclaredProperty',
+        'PhanUndeclaredStaticMethod',
+        'PhanUndeclaredTrait',
+        'PhanUndeclaredTypeParameter',
+        'PhanUndeclaredTypeReturnType',
+    ],
+];
 ```
 
 ### Laravel Pint
@@ -206,87 +257,7 @@ code composer.json
 ver[composer.json](./composer.json)
 
 ```json
-{
-    "name": "laravel/laravel",
-    "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
-    "license": "MIT",
-    "require": {
-        "php": "^8.2",
-        "laravel/framework": "^11.9",
-        "laravel/jetstream": "^5.1",
-        "laravel/sanctum": "^4.0",
-        "laravel/telescope": "^5.1",
-        "laravel/tinker": "^2.9",
-        "livewire/livewire": "^3.0"
-    },
-    "require-dev": {
-        "enlightn/security-checker": "^2.0",
-        "fakerphp/faker": "^1.23",
-        "larastan/larastan": "^2.0",
-        "laravel/pint": "^1.16",
-        "laravel/sail": "^1.26",
-        "mockery/mockery": "^1.6",
-        "nunomaduro/collision": "^8.0",
-        "phpunit/phpunit": "^11.0.1",
-        "roave/security-advisories": "dev-latest"
-    },
-    "autoload": {
-        "psr-4": {
-            "App\\": "app/",
-            "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/"
-        }
-    },
-    "scripts": {
-        "post-autoload-dump": [
-            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
-        ],
-        "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
-        ],
-        "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ],
-        "post-create-project-cmd": [
-            "@php artisan key:generate --ansi",
-            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
-            "@php artisan migrate --graceful --ansi"
-        ],
-        "tester": [
-            "composer diagnose",
-            "composer audit",
-            "@php ./vendor/bin/security-checker security:check ./composer.lock",
-            "./vendor/bin/phpstan analyse",
-            "pint",
-            "@php artisan optimize:clear",
-            "@php artisan test"
-        ]
-    },
-    "extra": {
-        "laravel": {
-            "dont-discover": []
-        }
-    },
-    "config": {
-        "optimize-autoloader": true,
-        "preferred-install": "dist",
-        "sort-packages": true,
-        "allow-plugins": {
-            "pestphp/pest-plugin": true,
-            "php-http/discovery": true
-        }
-    },
-    "minimum-stability": "stable",
-    "prefer-stable": true
-}
+
 ```
 
 ### PHPUnit

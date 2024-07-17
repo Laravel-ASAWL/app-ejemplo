@@ -21,6 +21,7 @@
         "laravel/sail": "^1.26",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.0",
+        "phan/phan": "^5.4",
         "phpunit/phpunit": "^11.0.1",
         "roave/security-advisories": "dev-latest"
     },
@@ -52,22 +53,25 @@
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --graceful --ansi"
         ],
-        "tdd": [
-            "clear",
-            "pint",
-            "@php artisan optimize:clear",
-            "echo '' > storage/logs/laravel.log",
-            "@php artisan test"
-        ],
-        "sast": [
-            "clear",
-            "./vendor/bin/phpstan analyse"
+        "test": [
+            "composer sca",
+            "composer sast",
+            "composer tdd"
         ],
         "sca": [
-            "clear",
             "composer diagnose",
             "composer audit",
             "@php ./vendor/bin/security-checker security:check ./composer.lock"
+        ],
+        "sast": [
+            "./vendor/bin/phpstan analyse",
+            "vendor/bin/phan --allow-polyfill-parser"
+        ],
+        "tdd": [
+            "pint",
+            "@php artisan optimize:clear",
+            "echo '' > storage/logs/testing.log",
+            "@php artisan test"
         ]
     },
     "extra": {
