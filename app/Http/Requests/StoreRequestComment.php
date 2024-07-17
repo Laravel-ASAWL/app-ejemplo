@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class StoreRequestComment extends FormRequest
@@ -14,7 +14,7 @@ class StoreRequestComment extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::check();
+        return auth()->check();
     }
 
     /**
@@ -47,12 +47,18 @@ class StoreRequestComment extends FormRequest
     /**
      * Get the validation error messages that apply to the request.
      *
-     * @return array<string, string>
+     * @return mixed
      */
-    protected function failedValidation(Validator $validator): array
+    protected function failedValidation(Validator $validator)
     {
-        throw ValidationException::withMessages(
-            $validator->errors()->getMessages()
-        )->redirectTo(route('posts.show', $this->post->slug).'#comments');
+        if ($this->post->slug) {
+            throw ValidationException::withMessages(
+                $validator->errors()->getMessages()
+            )->redirectTo(route('posts.show', $this->post->slug).'#comments');
+        }
+
+        Log::error(__('Post not found in StoreRequestComment failed validation.'), ['post_slug' => 'Unknown']);
+
+        return redirect()->to_route('404');
     }
 }

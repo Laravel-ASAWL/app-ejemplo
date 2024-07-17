@@ -25,6 +25,6 @@ class CommentPolicy
             ->select('user_id')
             ->first();
 
-        return $user->id === $comment->user_id || $user->id === $post->user_id;
+        return $user->id === $comment->user_id or $user->id === $post->user_id;
     }
 }

@@ -1466,6 +1466,12 @@ Ver [tests/Feature/Resources/Views/Posts/ShowBladeTest.php](./tests/Feature/Reso
 ```php
 ```
 
+#### Errores
+
+```shell
+php artisan vendor:publish --tag=laravel-errors
+```
+
 ### Rutas
 
 #### Artículos

@@ -51,7 +51,7 @@ class CommentControllerTest extends TestCase
         ]);
 
         $response->assertRedirectContains(route('posts.show', $post->slug).'#comments');
-        $response->assertSessionHasErrors('message', __('You are not authorized to create comments.'));
+        $response->assertSessionHasErrors('error', __('You are not authorized to create comments.'));
         $this->assertDatabaseCount('comments', 0);
     }
 
@@ -197,7 +197,7 @@ class CommentControllerTest extends TestCase
         $response = $this->delete(route('posts.comments.destroy', [$post, $comment]));
 
         $response->assertRedirectContains(route('posts.show', $post->slug).'#comments');
-        $response->assertSessionHasErrors('message', [__('You are not authorized to delete comments.')]);
+        $response->assertSessionHasErrors('error', [__('You are not authorized to delete comments.')]);
         $this->assertDatabaseHas('comments', ['id' => $comment->id]);
     }
 

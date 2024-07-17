@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class PostController extends Controller
@@ -27,7 +28,13 @@ class PostController extends Controller
         $post = Post::where('slug', $slug)
             ->select('id', 'user_id', 'title', 'slug', 'description', 'body', 'created_at')
             ->with('user:id,name,email')
-            ->firstOrFail();
+            ->first();
+
+        if (is_null($post)) {
+            Log::error(__('Post not found.'), ['post_slug' => $slug]);
+
+            return abort(404);
+        }
 
         return view('posts.show', [
             'post' => $post,

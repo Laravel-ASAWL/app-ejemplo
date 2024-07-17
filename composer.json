@@ -53,12 +53,14 @@
             "@php artisan migrate --graceful --ansi"
         ],
         "tester": [
+            "clear",
             "composer diagnose",
             "composer audit",
             "@php ./vendor/bin/security-checker security:check ./composer.lock",
-            "./vendor/bin/phpstan analyse",
             "pint",
             "@php artisan optimize:clear",
+            "echo '' > storage/logs/laravel.log",
+            "./vendor/bin/phpstan analyse",
             "@php artisan test"
         ]
     },

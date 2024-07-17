@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Routes;
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
-use App\Models\Comment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -108,14 +108,14 @@ class WebTest extends TestCase
         $post = Post::factory()->create();
         $comment = Comment::factory()->create([
             'post_id' => $post->id,
-            'user_id' => $user->id
+            'user_id' => $user->id,
         ]);
         $this->actingAs($user);
 
         $response = $this->delete(route('posts.comments.destroy', [$post, $comment]));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('posts.show', $post). "#comments");
+        $response->assertRedirect(route('posts.show', $post).'#comments');
         $this->assertDatabaseCount('comments', 0);
     }
 
@@ -133,7 +133,7 @@ class WebTest extends TestCase
         $response = $this->delete(route('posts.comments.destroy', [$post, $comment]));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('posts.show', $post). "#comments");
+        $response->assertRedirect(route('posts.show', $post).'#comments');
         $this->assertDatabaseCount('comments', 1);
         $this->assertModelExists($comment);
     }

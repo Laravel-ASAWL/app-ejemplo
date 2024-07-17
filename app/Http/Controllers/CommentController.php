@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreRequestComment;
 use App\Models\Comment;
 use App\Models\Post;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 
 class CommentController extends Controller
 {
@@ -15,15 +17,17 @@ class CommentController extends Controller
      */
     public function store(StoreRequestComment $request, Post $post): RedirectResponse
     {
-        if (! Gate::allows('create', Comment::class)) {
+        if ((! auth()->user() instanceof Authenticatable) or (! Gate::allows('create', Comment::class))) {
+            Log::error(__('You are not authorized to create comments.'), ['auth_user' => auth()->user() ?? 'Unknown']);
+
             return redirect()->route('posts.show', $post->slug)
                 ->withInput()
-                ->withErrors(['message' => __('You are not authorized to create comments.')])
+                ->withErrors(['error' => __('You are not authorized to create comments.')])
                 ->withFragment('comments');
         }
 
         $post->comments()->create([
-            'user_id' => $request->user()->id,
+            'user_id' => auth()->user()->id,
             'post_id' => $post->id,
             'body' => $request->validated('body'),
         ]);
@@ -38,10 +42,12 @@ class CommentController extends Controller
      */
     public function destroy(Post $post, Comment $comment): RedirectResponse
     {
-        if (! Gate::allows('delete', $comment)) {
+        if ((! auth()->user() instanceof Authenticatable) or (! Gate::allows('delete', $comment))) {
+            Log::error(__('You are not authorized to delete comments.'), ['auth_user' => auth()->user() ?? 'Unknown']);
+
             return redirect()->route('posts.show', $post->slug)
                 ->withInput()
-                ->withErrors(['message' => __('You are not authorized to delete comments.')])
+                ->withErrors(['error' => __('You are not authorized to delete comments.')])
                 ->withFragment('comments');
         }
 
