@@ -2,7 +2,7 @@
     "WASAL": "ASAWL",
     "Web Application Security Analysis Laravel": "Análisis de Seguridad en Aplicaciones Web Laravel",
     "App Example": "App de Ejemplo",
-    "asawl@example.com": "asawl@ejemplo.com",
+    "wasal@example.com": "asawl@ejemplo.com",
 
     "Post": "Artículo",
     "Posts": "Artículos",
@@ -31,6 +31,8 @@
     "You are not authorized to create comments.": "No estás autorizado para hacer comentarios.",
     "Comment deleted successfully!": "¡Comentario eliminado satisfactoriamente!",
     "You are not authorized to delete comments.": "No estás autorizado para hacer comentarios.",
+    "You has not verified email address.":"No tienes verificado el correo electrónico.",
+    "Click here to verify your email address": "Has clic aquí para validar tu correo electrónico",
     "Whoops! Something went wrong. Please try again later.": "Ups! Algo salió mal. Por favor inténtalo más tarde",
     "Whoops! Something went wrong.": "Ups! Algo salió mal.",
 

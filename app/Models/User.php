@@ -30,6 +30,16 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Determine if the user can view the Telescope.
+     */
+    public function scopeHasTelescopeAccess(): bool
+    {
+        return in_array($this->email, [
+            __('wasal@example.com'),
+        ]);
+    }
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>

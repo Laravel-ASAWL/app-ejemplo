@@ -14,10 +14,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::factory()->create([
+        $user = User::factory()->unverified()->create([
             'name' => __('WASAL'),
-            'email' => __('asawl@example.com'),
-            'password' => '@Asawl1234*',
+            'email' => __('wasal@example.com'),
+            'password' => 'P@ssw0rd2024',
         ]);
 
         Post::factory(100)->has(Comment::factory(20))->for($user)->create();

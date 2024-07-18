@@ -22,6 +22,13 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                @if(App\Providers\TelescopeServiceProvider::hasAccess())
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('telescope') }}" target="_blank">
+                        {{ __('Telescope') }}
+                    </x-nav-link>
+                </div>
+                @endif
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -148,6 +155,11 @@
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            @if(App\Providers\TelescopeServiceProvider::hasAccess())
+            <x-responsive-nav-link href="{{ route('telescope') }}" target="_blank">
+                {{ __('Telescope') }}
+            </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

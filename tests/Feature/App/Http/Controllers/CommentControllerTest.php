@@ -25,11 +25,6 @@ class CommentControllerTest extends TestCase
             'post_id' => $post->id,
             'body' => __('This is a test comment that should be created.'),
         ];
-        $logData = [
-            'user_id' => $user->id,
-            'post_id' => $post->id,
-            'comment_body' => __('This is a test comment that should be created.'),
-        ];
         Gate::define('create', fn (User $user, $comment) => $user->hasVerifiedEmail());
         $this->actingAs($user);
 

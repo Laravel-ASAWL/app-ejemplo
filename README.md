@@ -61,6 +61,9 @@ return [
 
     'directory_list' => [
         'app/',
+        'database/',
+        'resources/',
+        'routes/',
         'tests/Feature/App',
         'tests/Feature/Database',
         'tests/Feature/Resources',
@@ -74,8 +77,9 @@ return [
     ],
 
     'suppress_issue_types' => [
-        'PhanSuspiciousWeakTypeComparison',
         'PhanRedundantArrayValuesCall',
+        'PhanSuspiciousWeakTypeComparison',
+        'PhanTypeMismatchPropertyDefault',
         'PhanUndeclaredClassInstanceof',
         'PhanUndeclaredClassMethod',
         'PhanUndeclaredClassReference',
@@ -85,6 +89,7 @@ return [
         'PhanUndeclaredMethod',
         'PhanUndeclaredProperty',
         'PhanUndeclaredStaticMethod',
+        'PhanUndeclaredThis',
         'PhanUndeclaredTrait',
         'PhanUndeclaredTypeParameter',
         'PhanUndeclaredTypeReturnType',
@@ -92,7 +97,57 @@ return [
 ];
 ```
 
-### Laravel Pint
+### Dependencias para Test
+
+### PHPUnit
+
+```shell
+code phpunit.xml
+```
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+>
+    <testsuites>
+        <testsuite name="Feature">
+            <directory>tests/Feature/App</directory>
+        </testsuite>
+        <testsuite name="Feature">
+            <directory>tests/Feature/Database</directory>
+        </testsuite>
+        <testsuite name="Feature">
+            <directory>tests/Feature/Resources</directory>
+        </testsuite>
+        <testsuite name="Feature">
+            <directory>tests/Feature/Routes</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <directory>app</directory>
+        </include>
+    </source>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="APP_MAINTENANCE_DRIVER" value="file"/>
+        <env name="BCRYPT_ROUNDS" value="4"/>
+        <env name="CACHE_STORE" value="array"/>
+        <env name="DB_CONNECTION" value="sqlite"/>
+        <env name="DB_DATABASE" value="database/database-testing.sqlite"/>
+        <env name="MAIL_MAILER" value="array"/>
+        <env name="PULSE_ENABLED" value="false"/>
+        <env name="QUEUE_CONNECTION" value="sync"/>
+        <env name="SESSION_DRIVER" value="array"/>
+        <env name="TELESCOPE_ENABLED" value="false"/>
+    </php>
+</phpunit>
+```
+
+#### Laravel Pint
 
 ```shell
 composer require --dev laravel/pint
@@ -122,7 +177,9 @@ php artisan telescope:install
 php artisan migrate
 ```
 
-### Laravel Jetstream
+### Dependencias para Frontend
+
+#### Laravel Jetstream
 
 ```shell
 composer require laravel/jetstream
@@ -130,7 +187,7 @@ php artisan jetstream:install livewire --dark
 php artisan migrate
 ```
 
-### TailwindCSS - Flowbite
+#### TailwindCSS - Flowbite
 
 ```shell
 npm install -D tailwindcss postcss autoprefixer flowbite
@@ -173,7 +230,7 @@ export default {
 
 ## Condiguración inicial
 
-### Entorno
+### Entorno de desarrollo
 
 ```shell
 code .env
@@ -248,6 +305,81 @@ VITE_APP_NAME="${APP_NAME}"
 TELESCOPE_ENABLED=true
 ```
 
+### Entorno de testing
+
+```shell
+code .env.testing
+```
+
+```env
+APP_NAME="WASAL - App Example"
+APP_ENV=local
+APP_KEY=base64:+PD4ZfjOR73VnRWWgUoZ2hkVT94Qy6ToFE2+eXb0Ye8=
+APP_DEBUG=true
+APP_TIMEZONE=UTC
+APP_URL=http://localhost
+
+APP_LOCALE=es
+APP_FALLBACK_LOCALE=en
+APP_FAKER_LOCALE=es_ES
+
+APP_MAINTENANCE_DRIVER=file
+APP_MAINTENANCE_STORE=database
+
+BCRYPT_ROUNDS=12
+
+LOG_CHANNEL=stack
+LOG_STACK=testing
+LOG_DEPRECATIONS_CHANNEL=null
+LOG_LEVEL=debug
+
+DB_CONNECTION=sqlite
+# DB_HOST=127.0.0.1
+# DB_PORT=3306
+# DB_DATABASE=laravel
+# DB_USERNAME=root
+# DB_PASSWORD=
+
+SESSION_DRIVER=database
+SESSION_LIFETIME=120
+SESSION_ENCRYPT=false
+SESSION_PATH=/
+SESSION_DOMAIN=null
+
+BROADCAST_CONNECTION=log
+FILESYSTEM_DISK=local
+QUEUE_CONNECTION=database
+
+CACHE_STORE=database
+CACHE_PREFIX=wasal
+
+MEMCACHED_HOST=127.0.0.1
+
+REDIS_CLIENT=phpredis
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+
+MAIL_MAILER=log
+MAIL_HOST=127.0.0.1
+MAIL_PORT=2525
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS="hello@example.com"
+MAIL_FROM_NAME="${APP_NAME}"
+
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=
+AWS_USE_PATH_STYLE_ENDPOINT=false
+
+VITE_APP_NAME="${APP_NAME}"
+
+TELESCOPE_ENABLED=true
+```
+
 ### Composer
 
 ```shell
@@ -257,55 +389,99 @@ code composer.json
 ver[composer.json](./composer.json)
 
 ```json
-
-```
-
-### PHPUnit
-
-```shell
-code phpunit.xml
-```
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
-         bootstrap="vendor/autoload.php"
-         colors="true"
->
-    <testsuites>
-        <testsuite name="Feature">
-            <directory>tests/Feature/App</directory>
-        </testsuite>
-        <testsuite name="Feature">
-            <directory>tests/Feature/Database</directory>
-        </testsuite>
-        <testsuite name="Feature">
-            <directory>tests/Feature/Resources</directory>
-        </testsuite>
-        <testsuite name="Feature">
-            <directory>tests/Feature/Routes</directory>
-        </testsuite>
-    </testsuites>
-    <source>
-        <include>
-            <directory>app</directory>
-        </include>
-    </source>
-    <php>
-        <env name="APP_ENV" value="testing"/>
-        <env name="APP_MAINTENANCE_DRIVER" value="file"/>
-        <env name="BCRYPT_ROUNDS" value="4"/>
-        <env name="CACHE_STORE" value="array"/>
-        <env name="DB_CONNECTION" value="sqlite"/>
-        <env name="DB_DATABASE" value="database/database-testing.sqlite"/>
-        <env name="MAIL_MAILER" value="array"/>
-        <env name="PULSE_ENABLED" value="false"/>
-        <env name="QUEUE_CONNECTION" value="sync"/>
-        <env name="SESSION_DRIVER" value="array"/>
-        <env name="TELESCOPE_ENABLED" value="false"/>
-    </php>
-</phpunit>
+{
+    "name": "laravel/laravel",
+    "type": "project",
+    "description": "The skeleton application for the Laravel framework.",
+    "keywords": ["laravel", "framework"],
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "laravel/framework": "^11.9",
+        "laravel/jetstream": "^5.1",
+        "laravel/sanctum": "^4.0",
+        "laravel/telescope": "^5.1",
+        "laravel/tinker": "^2.9",
+        "livewire/livewire": "^3.0"
+    },
+    "require-dev": {
+        "enlightn/security-checker": "^2.0",
+        "fakerphp/faker": "^1.23",
+        "larastan/larastan": "^2.0",
+        "laravel/pint": "^1.16",
+        "laravel/sail": "^1.26",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.0",
+        "phan/phan": "^5.4",
+        "phpunit/phpunit": "^11.0.1",
+        "roave/security-advisories": "dev-latest"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi",
+            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
+            "@php artisan migrate --graceful --ansi"
+        ],
+        "test": [
+            "composer sca",
+            "composer sast",
+            "composer tdd"
+        ],
+        "sca": [
+            "composer diagnose",
+            "composer audit",
+            "@php ./vendor/bin/security-checker security:check ./composer.lock"
+        ],
+        "sast": [
+            "./vendor/bin/phpstan analyse",
+            "vendor/bin/phan --allow-polyfill-parser"
+        ],
+        "tdd": [
+            "pint",
+            "@php artisan optimize:clear",
+            "echo '' > storage/logs/testing.log",
+            "@php artisan test"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
 ```
 
 ### Dases de datos

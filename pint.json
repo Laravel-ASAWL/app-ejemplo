@@ -1,6 +1,7 @@
 {
     "preset": "laravel",
     "rules": {
+        "control_structure_braces": false,
         "simplified_null_return": true,
         "braces": false,
         "new_with_braces": {

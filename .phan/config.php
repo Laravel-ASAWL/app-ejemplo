@@ -5,6 +5,9 @@ return [
 
     'directory_list' => [
         'app/',
+        'database/',
+        'resources/',
+        'routes/',
         'tests/Feature/App',
         'tests/Feature/Database',
         'tests/Feature/Resources',
@@ -18,8 +21,9 @@ return [
     ],
 
     'suppress_issue_types' => [
-        'PhanSuspiciousWeakTypeComparison',
         'PhanRedundantArrayValuesCall',
+        'PhanSuspiciousWeakTypeComparison',
+        'PhanTypeMismatchPropertyDefault',
         'PhanUndeclaredClassInstanceof',
         'PhanUndeclaredClassMethod',
         'PhanUndeclaredClassReference',
@@ -29,6 +33,7 @@ return [
         'PhanUndeclaredMethod',
         'PhanUndeclaredProperty',
         'PhanUndeclaredStaticMethod',
+        'PhanUndeclaredThis',
         'PhanUndeclaredTrait',
         'PhanUndeclaredTypeParameter',
         'PhanUndeclaredTypeReturnType',
