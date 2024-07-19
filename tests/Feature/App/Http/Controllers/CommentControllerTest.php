@@ -6,12 +6,14 @@ use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Gate;
 use Tests\TestCase;
 
 class CommentControllerTest extends TestCase
 {
     use RefreshDatabase;
+    use WithFaker;
 
     /**
      * Authorized user can create a comment
@@ -25,7 +27,7 @@ class CommentControllerTest extends TestCase
             'post_id' => $post->id,
             'body' => __('This is a test comment that should be created.'),
         ];
-        Gate::define('create', fn (User $user, $comment) => $user->hasVerifiedEmail());
+        //Gate::define('auth', fn (User $user, $comment) => $user->hasVerifiedEmail());
         $this->actingAs($user);
 
         $response = $this->post(route('posts.comments.store', $post), [
@@ -34,7 +36,8 @@ class CommentControllerTest extends TestCase
 
         $logFile = file_get_contents(storage_path('logs/testing.log'));
         $this->assertStringContainsString(__('Comment created successfully!'), $logFile);
-        $this->assertStringContainsString(__('This is a test comment that should be created.'), $logFile);
+        $this->assertStringContainsString('"user_id":'.$user->id, $logFile);
+        $this->assertStringContainsString('"post_id":'.$post->id, $logFile);
         $response->assertRedirectContains(route('posts.show', $post->slug).'#comments');
         $response->assertSessionHas('success', __('Comment created successfully!'));
         $this->assertDatabaseHas('comments', $commentData);
@@ -47,7 +50,7 @@ class CommentControllerTest extends TestCase
     {
         $user = User::factory()->unverified()->create();
         $post = Post::factory()->create();
-        Gate::define('create', fn (User $user, $comment) => $user->hasVerifiedEmail());
+        //Gate::define('create', fn (User $user, $comment) => $user->hasVerifiedEmail());
         $this->actingAs($user);
 
         $response = $this->post(route('posts.comments.store', $post), [
@@ -66,7 +69,7 @@ class CommentControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $post = Post::factory()->create();
-        Gate::define('create', fn (User $user, $comment) => $user->hasVerifiedEmail());
+        //Gate::define('create', fn (User $user, $comment) => $user->hasVerifiedEmail());
         $this->actingAs($user);
 
         $response = $this->post(route('posts.comments.store', $post), ['body' => null]);
@@ -83,7 +86,7 @@ class CommentControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $post = Post::factory()->create();
-        Gate::define('create', fn (User $user, $comment) => $user->hasVerifiedEmail());
+        //Gate::define('create', fn (User $user, $comment) => $user->hasVerifiedEmail());
         $this->actingAs($user);
 
         $response = $this->post(route('posts.comments.store', $post), ['body' => 1234567890]);
@@ -100,7 +103,7 @@ class CommentControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $post = Post::factory()->create();
-        Gate::define('create', fn (User $user, $comment) => $user->hasVerifiedEmail());
+        //Gate::define('create', fn (User $user, $comment) => $user->hasVerifiedEmail());
         $this->actingAs($user);
 
         $response = $this->post(route('posts.comments.store', $post), [
@@ -119,7 +122,7 @@ class CommentControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $post = Post::factory()->create();
-        Gate::define('create', fn (User $user, $comment) => $user->hasVerifiedEmail());
+        //Gate::define('create', fn (User $user, $comment) => $user->hasVerifiedEmail());
         $this->actingAs($user);
 
         $response = $this->post(route('posts.comments.store', $post), [
@@ -147,11 +150,11 @@ class CommentControllerTest extends TestCase
             'user_id' => $user->id,
             'post_id' => $post->id,
         ]);
-        Gate::define('delete', function (User $user, $comment) {
+        /*Gate::define('delete', function (User $user, $comment) {
             $post = Post::where('id', $comment->post_id)->first();
 
             return $user->id === $comment->user_id || $user->id === $post->user_id;
-        });
+        });*/
         $this->actingAs($user);
 
         $response = $this->delete(route('posts.comments.destroy', [$post, $comment]));
@@ -169,11 +172,11 @@ class CommentControllerTest extends TestCase
         $user = User::factory()->create();
         $post = Post::factory()->for($user)->create();
         $comment = Comment::factory()->create(['post_id' => $post->id]);
-        Gate::define('delete', function (User $user, $comment) {
+        /*Gate::define('delete', function (User $user, $comment) {
             $post = Post::where('id', $comment->post_id)->first();
 
             return $user->id === $comment->user_id || $user->id === $post->user_id;
-        });
+        });*/
         $this->actingAs($user);
 
         $response = $this->delete(route('posts.comments.destroy', [$post, $comment]));
@@ -191,11 +194,11 @@ class CommentControllerTest extends TestCase
         $user = User::factory()->create();
         $post = Post::factory()->create();
         $comment = Comment::factory()->create(['post_id' => $post->id]);
-        Gate::define('delete', function (User $user, $comment) {
+        /*Gate::define('delete', function (User $user, $comment) {
             $post = Post::where('id', $comment->post_id)->first();
 
             return $user->id === $comment->user_id || $user->id === $post->user_id;
-        });
+        });*/
         $this->actingAs($user);
 
         $response = $this->delete(route('posts.comments.destroy', [$post, $comment]));
@@ -213,11 +216,11 @@ class CommentControllerTest extends TestCase
         $user = User::factory()->create();
         $post = Post::factory()->create();
         $comment = Comment::factory()->create(['post_id' => $post->id]);
-        Gate::define('delete', function (User $user, $comment) {
+        /*Gate::define('delete', function (User $user, $comment) {
             $post = Post::where('id', $comment->post_id)->first();
 
             return $user->id === $comment->user_id || $user->id === $post->user_id;
-        });
+        });*/
         $this->actingAs($user);
 
         $response = $this->delete(route('posts.comments.destroy', [$post, 999]));
@@ -236,11 +239,11 @@ class CommentControllerTest extends TestCase
             'user_id' => $user->id,
             'post_id' => $post->id,
         ]);
-        Gate::define('delete', function (User $user, $comment) {
+        /*Gate::define('delete', function (User $user, $comment) {
             $post = Post::where('id', $comment->post_id)->first();
 
             return $user->id === $comment->user_id || $user->id === $post->user_id;
-        });
+        });*/
         Comment::where('id', $comment->id)->delete();
         $this->actingAs($user);
 

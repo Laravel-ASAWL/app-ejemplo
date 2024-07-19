@@ -5,48 +5,56 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreRequestComment;
 use App\Models\Comment;
 use App\Models\Post;
+use App\Repositories\CommentRepository;
+use App\Services\CommentLogger;
+use App\Services\RedirectService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Log;
 
+/**
+ * Comment controller.
+ */
 class CommentController extends Controller
 {
     /**
-     * Comment model.
+     * Create a new controller instance.
      */
-    protected Comment $comment;
-
-    /**
-     * Post model.
-     */
-    protected Post $post;
-
-    /**
-     * Comment body.
-     */
-    protected string $comment_body;
+    public function __construct(
+        private CommentRepository $commentRepository,
+        private CommentLogger $logger,
+        private RedirectService $redirectService
+    ) {}
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreRequestComment $request, Post $post): RedirectResponse
     {
-        $this->post = $post;
-        $this->comment_body = $request->validated('body');
+        if (! Gate::allows('auth', Comment::class)) {
+            $this->logger->logUnauthorizedCreationAttempt($post, $request->validated('body'));
 
-        if (! Gate::allows('auth', Comment::class))
-            return $this->storeAuthLog();
+            return $this->redirectService->redirectToPostWithErrorMessage($post, __('You are not authorized to create comments.'));
+        }
 
-        if (! Gate::allows('verificatedEmail', Comment::class))
-            return $this->storeVerificatedEmailLog();
+        if (! Gate::allows('verificateEmail', Comment::class)) {
+            $this->logger->logUnverifiedEmailCreationAttempt($post, $request->validated('body'));
 
-        $post->comments()->create([
+            return $this->redirectService->redirectToPostWithErrorMessage(
+                $post,
+                __('You have not verified your email address.').' '.
+                '<a href="'.route('verification.notice').'" class="underline">'.
+                __('Click here to verify your email address').'</a>.'
+            );
+        }
+
+        $comment = $this->commentRepository->create($post, [
             'user_id' => auth()->user()->id,
-            'post_id' => $this->post->id,
-            'body' => $this->comment_body,
+            'body' => $request->validated('body'),
         ]);
 
-        return $this->storeCommentLog();
+        $this->logger->logCommentCreated($post, $comment);
+
+        return $this->redirectService->redirectToPostWithSuccessMessage($post, __('Comment created successfully!'));
     }
 
     /**
@@ -54,137 +62,33 @@ class CommentController extends Controller
      */
     public function destroy(Post $post, Comment $comment): RedirectResponse
     {
-        $this->post = $post;
-        $this->comment = $comment;
+        if (! Gate::allows('auth', Comment::class)) {
+            $this->logger->logUnauthorizedDeletionAttempt($post, $comment);
 
-        if (! Gate::allows('authCheck', $comment))
-            return $this->destroyAuthLog();
+            return $this->redirectService->redirectToPostWithErrorMessage($post, __('You are not authorized to delete comments.'));
+        }
 
-        if (! Gate::allows('hasVerificatedEmail', Comment::class))
-            return $this->destroyVerificatedEmailLog();
+        if (! Gate::allows('verificateEmail', Comment::class)) {
+            $this->logger->logUnverifiedEmailDeletionAttempt($post, $comment);
 
-        if ((! Gate::allows('ownerComment', $comment)) and (! Gate::allows('ownerPost', $comment)))
-            return $this->destroyOwwerLog();
+            return $this->redirectService->redirectToPostWithErrorMessage(
+                $post,
+                __('You have not verified your email address.').' '.
+                '<a href="'.route('verification.notice').'" class="underline">'.
+                __('Click here to verify your email address').'</a>.'
+            );
+        }
 
-        $comment->delete();
+        if ((! Gate::allows('ownerComment', $comment) && (! Gate::allows('ownerPost', $comment)))) {
+            $this->logger->logUnauthorizedDeletionAttempt($post, $comment);
 
-        return $this->destroyCommentLog();
-    }
+            return $this->redirectService->redirectToPostWithErrorMessage($post, __('You are not authorized to delete comments.'));
+        }
 
-    /**
-     * Save log if user cannot create comment because is not authorized.
-     */
-    private function storeAuthLog(): RedirectResponse
-    {
-        Log::warning(__('You are not authorized to create comments.'), [
-            'user_id' => 'Unknown',
-            'post_id' => $this->post->id,
-            'comment_body' => $this->comment_body,
-        ]);
+        $this->commentRepository->delete($comment);
 
-        return redirect()->route('posts.show', $this->post->slug)
-            ->withErrors(['error' => __('You are not authorized to create comments.')])
-            ->withFragment('comments')
-            ->withInput();
-    }
+        $this->logger->logCommentDeleted($post, $comment);
 
-    /**
-     * Save log if user cannot create comment because has verificated email.
-     */
-    private function storeVerificatedEmailLog(): RedirectResponse
-    {
-        Log::warning(__('You has not verified email address.'), [
-            'user_id' => auth()->user()->id,
-            'post_id' => $this->post->id,
-            'comment_body' => $this->comment_body,
-        ]);
-
-        return redirect()->route('posts.show', $this->post->slug)
-            ->withErrors(['error' => __('You has not verified email address.').' <a href="'.route('verification.notice').'" class="underline">'.__('Click here to verify your email address').'</a>.'])
-            ->withFragment('comments')
-            ->withInput();
-    }
-
-    /**
-     * Save log if comment was created successfully.
-     */
-    private function storeCommentLog(): RedirectResponse
-    {
-        Log::info(__('Comment created successfully!'), [
-            'user_id' => auth()->user()->id,
-            'post_id' => $this->post->id,
-            'comment_body' => $this->comment_body,
-        ]);
-
-        return redirect()->route('posts.show', $this->post->slug)
-            ->with('success', __('Comment created successfully!'))
-            ->withFragment('comments');
-    }
-
-    /**
-     * Save log if user cannot delete comment because is not authorized.
-     */
-    private function destroyAuthLog(): RedirectResponse
-    {
-        Log::warning(__('You are not authorized to delete comments.'), [
-            'user_id' => 'Unknown',
-            'post_id' => $this->post->id,
-            'comment_id' => $this->comment->id,
-        ]);
-
-        return redirect()->route('posts.show', $this->post->slug)
-            ->withErrors(['error' => __('You are not authorized to delete comments.')])
-            ->withFragment('comments')
-            ->withInput();
-    }
-
-    /**
-     * Save log if user cannot delete comment because has verificated email.
-     */
-    private function destroyVerificatedEmailLog(): RedirectResponse
-    {
-        Log::warning(__('You has not verified email address.'), [
-            'user_id' => auth()->user()->id,
-            'post_id' => $this->post->id,
-            'comment_if' => $this->comment->id,
-        ]);
-
-        return redirect()->route('posts.show', $this->post->slug)
-            ->withErrors(['error' => __('You has not verified email address.').' <a href="'.route('verification.notice').'" class="underline">'.__('Click here to verify your email address').'</a>.'])
-            ->withFragment('comments')
-            ->withInput();
-    }
-
-    /**
-     * Save log if user cannot delete comment because user is not owner.
-     */
-    private function destroyOwwerLog(): RedirectResponse
-    {
-        Log::error(__('You are not authorized to delete comments.'), [
-            'user_id' => auth()->user()->id,
-            'post_id' => $this->post->id,
-            'comment_id' => $this->comment->id,
-        ]);
-
-        return redirect()->route('posts.show', $this->post->slug)
-            ->withInput()
-            ->withErrors(['error' => __('You are not authorized to delete comments.')])
-            ->withFragment('comments');
-    }
-
-    /**
-     * Save log if comment was deleted successfully.
-     */
-    private function destroyCommentLog(): RedirectResponse
-    {
-        Log::info(__('Comment deleted successfully!'), [
-            'user_id' => auth()->user()->id,
-            'post_id' => $this->post->id,
-            'comment_id' => $this->comment->id,
-        ]);
-
-        return redirect()->route('posts.show', $this->post->slug)
-            ->with('success', __('Comment deleted successfully!'))
-            ->withFragment('comments');
+        return $this->redirectService->redirectToPostWithSuccessMessage($post, __('Comment deleted successfully!'));
     }
 }

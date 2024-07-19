@@ -10,7 +10,8 @@ use Tests\TestCase;
 
 class StoreRequestCommentTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase;
+    use WithFaker;
 
     /**
      * Authorized user can create comment.

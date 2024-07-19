@@ -19,7 +19,7 @@ class CommentPolicy
     /**
      * Determine whether the user has verificated email.
      */
-    public function verificatedEmail(User $user): bool
+    public function verificateEmail(User $user): bool
     {
         return $user->hasVerifiedEmail();
     }
