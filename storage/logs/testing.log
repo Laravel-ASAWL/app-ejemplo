@@ -1,11 +1,19 @@
 
-[2024-07-19 09:49:35] testing.INFO: ¡Comentario creado satisfactoriamente! {"user_id":1,"post_id":1,"comment_id":1} 
-[2024-07-19 09:49:35] testing.WARNING: Attempt to create a comment with unverified email. {"user_id":1,"post_id":1,"comment_body":"This is a test comment that should not be created because the email address of the user is not verified."} 
-[2024-07-19 09:49:35] testing.INFO: ¡Comentario eliminado satisfactoriamente! {"user_id":1,"post_id":1,"comment_id":1} 
-[2024-07-19 09:49:35] testing.INFO: ¡Comentario eliminado satisfactoriamente! {"user_id":1,"post_id":1,"comment_id":1} 
-[2024-07-19 09:49:35] testing.WARNING: Unauthorized attempt to delete a comment. {"user_id":1,"post_id":1,"comment_id":1} 
-[2024-07-19 09:49:36] testing.ERROR: Post not found. {"post_slug":"post-invalid-slug"} 
-[2024-07-19 09:49:36] testing.INFO: ¡Comentario creado satisfactoriamente! {"user_id":1,"post_id":1,"comment_id":1} 
-[2024-07-19 09:49:39] testing.INFO: ¡Comentario creado satisfactoriamente! {"user_id":1,"post_id":1,"comment_id":1} 
-[2024-07-19 09:49:39] testing.INFO: ¡Comentario eliminado satisfactoriamente! {"user_id":1,"post_id":1,"comment_id":1} 
-[2024-07-19 09:49:39] testing.WARNING: Unauthorized attempt to delete a comment. {"user_id":2,"post_id":1,"comment_id":1} 
+[2024-07-19 16:57:21] testing.INFO: ¡Comentario creado satisfactoriamente! {"ip_address":"127.0.0.1","user_id":1,"post_id":1,"comment_id":1} 
+[2024-07-19 16:57:21] testing.WARNING: Attempt to create a comment with unverified email. {"ip_address":"127.0.0.1","user_id":1,"post_id":1,"comment_body":"This is a test comment that should not be created because the email address of the user is not verified."} 
+[2024-07-19 16:57:21] testing.WARNING: Comment failed validation! {"ip_address":"127.0.0.1","user_id":1,"post_id":1,"body":["Un comentario es requerido."]} 
+[2024-07-19 16:57:21] testing.WARNING: Comment failed validation! {"ip_address":"127.0.0.1","user_id":1,"post_id":1,"body":["El comentario debe ser texto.","El comentario debe ser de 25 caracteres mínimo."]} 
+[2024-07-19 16:57:21] testing.WARNING: Comment failed validation! {"ip_address":"127.0.0.1","user_id":1,"post_id":1,"body":["El comentario debe ser de 25 caracteres mínimo."]} 
+[2024-07-19 16:57:21] testing.WARNING: Comment failed validation! {"ip_address":"127.0.0.1","user_id":1,"post_id":1,"body":["El comentario excede de 255 caracteres."]} 
+[2024-07-19 16:57:21] testing.INFO: ¡Comentario eliminado satisfactoriamente! {"ip_address":"127.0.0.1","user_id":1,"post_id":1,"comment_id":1} 
+[2024-07-19 16:57:21] testing.INFO: ¡Comentario eliminado satisfactoriamente! {"ip_address":"127.0.0.1","user_id":1,"post_id":1,"comment_id":1} 
+[2024-07-19 16:57:21] testing.WARNING: Unauthorized attempt to delete a comment. {"ip_address":"127.0.0.1","user_id":1,"post_id":1,"comment_id":1} 
+[2024-07-19 16:57:21] testing.WARNING: Post not found {"ip_address":"127.0.0.1","user_id":"Unknown","post_slug":"post-invalid-slug"} 
+[2024-07-19 16:57:22] testing.INFO: ¡Comentario creado satisfactoriamente! {"ip_address":"127.0.0.1","user_id":1,"post_id":1,"comment_id":1} 
+[2024-07-19 16:57:22] testing.WARNING: Comment failed validation! {"ip_address":"127.0.0.1","user_id":1,"post_id":1,"body":["Un comentario es requerido."]} 
+[2024-07-19 16:57:22] testing.WARNING: Comment failed validation! {"ip_address":"127.0.0.1","user_id":1,"post_id":1,"body":["El comentario debe ser texto.","El comentario debe ser de 25 caracteres mínimo."]} 
+[2024-07-19 16:57:22] testing.WARNING: Comment failed validation! {"ip_address":"127.0.0.1","user_id":1,"post_id":1,"body":["El comentario debe ser de 25 caracteres mínimo."]} 
+[2024-07-19 16:57:22] testing.WARNING: Comment failed validation! {"ip_address":"127.0.0.1","user_id":1,"post_id":1,"body":["El comentario excede de 255 caracteres."]} 
+[2024-07-19 16:57:25] testing.INFO: ¡Comentario creado satisfactoriamente! {"ip_address":"127.0.0.1","user_id":1,"post_id":1,"comment_id":1} 
+[2024-07-19 16:57:25] testing.INFO: ¡Comentario eliminado satisfactoriamente! {"ip_address":"127.0.0.1","user_id":1,"post_id":1,"comment_id":1} 
+[2024-07-19 16:57:25] testing.WARNING: Unauthorized attempt to delete a comment. {"ip_address":"127.0.0.1","user_id":2,"post_id":1,"comment_id":1} 

@@ -7,7 +7,6 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Gate;
 use Tests\TestCase;
 
 class CommentControllerTest extends TestCase
@@ -27,7 +26,6 @@ class CommentControllerTest extends TestCase
             'post_id' => $post->id,
             'body' => __('This is a test comment that should be created.'),
         ];
-        //Gate::define('auth', fn (User $user, $comment) => $user->hasVerifiedEmail());
         $this->actingAs($user);
 
         $response = $this->post(route('posts.comments.store', $post), [
@@ -50,7 +48,6 @@ class CommentControllerTest extends TestCase
     {
         $user = User::factory()->unverified()->create();
         $post = Post::factory()->create();
-        //Gate::define('create', fn (User $user, $comment) => $user->hasVerifiedEmail());
         $this->actingAs($user);
 
         $response = $this->post(route('posts.comments.store', $post), [
@@ -69,7 +66,6 @@ class CommentControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $post = Post::factory()->create();
-        //Gate::define('create', fn (User $user, $comment) => $user->hasVerifiedEmail());
         $this->actingAs($user);
 
         $response = $this->post(route('posts.comments.store', $post), ['body' => null]);
@@ -86,7 +82,6 @@ class CommentControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $post = Post::factory()->create();
-        //Gate::define('create', fn (User $user, $comment) => $user->hasVerifiedEmail());
         $this->actingAs($user);
 
         $response = $this->post(route('posts.comments.store', $post), ['body' => 1234567890]);
@@ -103,7 +98,6 @@ class CommentControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $post = Post::factory()->create();
-        //Gate::define('create', fn (User $user, $comment) => $user->hasVerifiedEmail());
         $this->actingAs($user);
 
         $response = $this->post(route('posts.comments.store', $post), [
@@ -122,7 +116,6 @@ class CommentControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $post = Post::factory()->create();
-        //Gate::define('create', fn (User $user, $comment) => $user->hasVerifiedEmail());
         $this->actingAs($user);
 
         $response = $this->post(route('posts.comments.store', $post), [

@@ -2,13 +2,24 @@
 
 namespace App\Http\Requests;
 
+use App\Services\CommentLogger;
+use App\Services\PostLogger;
+use App\Services\RedirectService;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class StoreRequestComment extends FormRequest
 {
+    /**
+     * Create a new form request instance.
+     */
+    public function __construct(
+        protected CommentLogger $commentLogger,
+        protected PostLogger $postLogger,
+        protected RedirectService $redirectService,
+    ) {}
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -52,12 +63,14 @@ class StoreRequestComment extends FormRequest
     protected function failedValidation(Validator $validator)
     {
         if ($this->post->slug) {
+            $this->commentLogger->logCommentFailedDValidation($this->post, $validator->errors()->getMessages());
+
             throw ValidationException::withMessages(
                 $validator->errors()->getMessages()
             )->redirectTo(route('posts.show', $this->post->slug).'#comments');
         }
 
-        Log::error(__('Post not found in StoreRequestComment failed validation.'), ['post_slug' => 'Unknown']);
+        $this->postLogger->logPostNotFound('Unknown');
 
         return redirect()->to_route('404');
     }

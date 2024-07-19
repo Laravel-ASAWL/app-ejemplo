@@ -4,9 +4,22 @@ namespace App\Services;
 
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\View\View;
 
 class RedirectService
 {
+    /**
+     * Redirect to post with comments.
+     */
+    public function redirectToPostWithComments(Post $post, ?LengthAwarePaginator $comments = null): View
+    {
+        return view('posts.show', [
+            'post' => $post,
+            'comments' => $comments,
+        ]);
+    }
+
     /**
      * Redirect to post with error message.
      */

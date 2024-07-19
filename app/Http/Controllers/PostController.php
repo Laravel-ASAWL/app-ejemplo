@@ -3,21 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Illuminate\Support\Facades\Log;
+use App\Repositories\PostRepository;
+use App\Services\PostLogger;
+use App\Services\RedirectService;
 use Illuminate\View\View;
 
 class PostController extends Controller
 {
     /**
+     * Create a new controller instance.
+     */
+    public function __construct(
+        private PostRepository $postRepository,
+        private PostLogger $logger,
+        private RedirectService $redirectService
+    ) {}
+
+    /**
      * Display a listing of the resource.
      */
     public function index(): View
     {
-        return view('posts.index', [
-            'posts' => Post::count() > 0 ? Post::latest()
-                ->select('title', 'slug', 'description', 'created_at')
-                ->paginate(10) : null,
-        ]);
+        $posts = $this->postRepository->posts();
+
+        return view('posts.index', $posts);
     }
 
     /**
@@ -31,17 +40,13 @@ class PostController extends Controller
             ->first();
 
         if (is_null($post)) {
-            Log::error(__('Post not found.'), ['post_slug' => $slug]);
+            $this->logger->logPostNotFound($slug);
 
             return abort(404);
         }
 
-        return view('posts.show', [
-            'post' => $post,
-            'comments' => $post->comments()->count() > 0 ? $post->comments()->latest()
-                ->select('id', 'user_id', 'post_id', 'body', 'created_at')
-                ->with('user:id,name,email')
-                ->paginate(10) : null,
-        ]);
+        $comments = $this->postRepository->postComments($post);
+
+        return $this->redirectService->redirectToPostWithComments($post, $comments);
     }
 }

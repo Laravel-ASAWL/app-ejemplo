@@ -3,11 +3,15 @@
 namespace App\Policies;
 
 use App\Models\Comment;
-use App\Models\Post;
 use App\Models\User;
+use App\Repositories\PostRepository;
 
 class CommentPolicy
 {
+    public function __construct(
+        private PostRepository $postRepository
+    ) {}
+
     /**
      * Determine whether the user can access models.
      */
@@ -37,10 +41,18 @@ class CommentPolicy
      */
     public function ownerPost(User $user, Comment $comment): bool
     {
-        $post = Post::where('id', $comment->post_id)
-            ->select('user_id')
-            ->first();
+        $post = $this->postRepository->post($comment);
 
         return $user->id === $post->user_id;
+    }
+
+    /**
+     * Determine whether the user can delete the comment.
+     */
+    public function delete(User $user, Comment $comment): bool
+    {
+        $post = $this->postRepository->post($comment);
+
+        return $user->id === $post->user_id || $user->id === $comment->user_id;
     }
 }
