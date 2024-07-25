@@ -49,6 +49,8 @@ Ver [.phan/config.php](./.phan/config.php)
 code phpunit.xml
 ```
 
+Ver [phpunit.xml](./phpunit.xml)
+
 #### Laravel Pint
 
 ```shell
